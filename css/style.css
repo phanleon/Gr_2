@@ -1,0 +1,345 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #050505; /* Đen nhám sâu */
+    color: #ffffff;
+    overflow-x: hidden;
+}
+/* =========================================
+   MÀN HÌNH INTRO VIDEO
+========================================= */
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000; /* Nền đen tuyệt đối */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#intro-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Phóng to video full màn hình không bị méo */
+}
+
+.skip-btn {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    padding: 10px 20px;
+    font-size: 10px;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 30px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    mix-blend-mode: difference; /* Tạo hiệu ứng chữ tự đổi màu theo nền */
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 5px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #d4af37; /* Màu vàng Gold sang trọng */
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* =========================================
+   HIỆU ỨNG XE CHẠY NGANG (INTRO)
+========================================= */
+.lambo-drive {
+    position: absolute;
+    bottom: 15%; /* Vị trí xe nằm ở nửa dưới màn hình */
+    left: 0;
+    width: 600px; /* Kích thước xe */
+    z-index: 2; /* Nằm trên nền (z-index: -1) nhưng dưới chữ (z-index: 10) */
+    pointer-events: none; /* Tránh việc khách hàng click nhầm vào ảnh xe */
+    
+    /* Đưa xe ra hẳn ngoài mép trái màn hình chờ sẵn */
+    transform: translateX(-150%);
+    
+    /* Thêm bóng đổ để xe nhìn thật hơn, cảm giác bám đường */
+    filter: drop-shadow(0px 30px 15px rgba(0,0,0,0.9));
+}
+
+.lambo-drive img {
+    width: 100%;
+    height: auto;
+}
+
+/* Đảm bảo content chữ luôn nổi lên trên cùng */
+.hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+.hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6; /* Làm mờ ảnh để nổi bật chữ */
+}
+
+/* Typography */
+.title {
+    font-size: 6vw;
+    font-weight: 200; /* Font mỏng tạo sự tinh tế */
+    letter-spacing: 15px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    opacity: 0; /* Ẩn đi để JS làm hiệu ứng hiện ra */
+    transform: translateY(50px);
+}
+
+.subtitle {
+    font-size: 1.2vw;
+    font-weight: 400;
+    letter-spacing: 8px;
+    color: #cccccc;
+    margin-bottom: 40px;
+    opacity: 0;
+}
+
+/* Nút bấm Luxury */
+.btn-luxury {
+    background: transparent;
+    color: #d4af37;
+    border: 1px solid #d4af37;
+    padding: 15px 40px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    opacity: 0;
+}
+
+.btn-luxury:hover {
+    background: #d4af37;
+    color: #000;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+/* =========================================
+   TRANG CHI TIẾT SẢN PHẨM (DETAIL)
+========================================= */
+.detail-section {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+.detail-image {
+    flex: 1;
+    min-width: 50%;
+    height: calc(100vh - 80px);
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-info {
+    flex: 1;
+    min-width: 50%;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #0a0a0a;
+}
+
+.detail-title {
+    font-size: 3vw;
+    font-weight: 200;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+}
+
+.detail-price {
+    font-size: 24px;
+    color: #d4af37;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 50px;
+    border-top: 1px solid #333;
+    padding-top: 30px;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-label {
+    font-size: 10px;
+    color: #888;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.spec-value {
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.btn-full {
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* =========================================
+   TRANG GIỎ HÀNG (CART)
+========================================= */
+.cart-page {
+    background-color: #050505;
+}
+
+.cart-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 120px 20px 50px;
+}
+
+.cart-title {
+    font-size: 30px;
+    font-weight: 200;
+    letter-spacing: 10px;
+    text-align: center;
+    margin-bottom: 60px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid #222;
+}
+
+.cart-item img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cart-item-info {
+    flex: 1;
+    margin-left: 30px;
+}
+
+.cart-item-info h3 {
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+}
+
+.cart-item-info p {
+    color: #d4af37;
+    letter-spacing: 1px;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 2px;
+    font-size: 12px;
+    transition: color 0.3s;
+}
+
+.btn-remove:hover {
+    color: #ff0000;
+}
+
+.cart-summary {
+    margin-top: 50px;
+    background: #111;
+    padding: 30px;
+    border-radius: 4px;
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+}
+
+.empty-cart {
+    text-align: center;
+    color: #888;
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding: 50px 0;
+}
