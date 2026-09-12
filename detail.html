@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventador SVJ | Lamborghini</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header (Giữ nguyên như trang chủ) -->
+    <header class="navbar">
+        <a href="index.html" class="logo">LAMBORGHINI</a>
+        <nav>
+            <a href="index.html">Models</a>
+            <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    <!-- Chi tiết sản phẩm -->
+    <section class="detail-section">
+        <div class="detail-image animate-fade">
+            <img src="https://images.unsplash.com/photo-1620882814835-900388a10129?q=80&w=2070" alt="Aventador SVJ">
+        </div>
+        
+        <div class="detail-info animate-slide-up">
+            <h1 class="detail-title">AVENTADOR SVJ</h1>
+            <p class="detail-price">$517,770</p>
+            
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <span class="spec-label">ĐỘNG CƠ</span>
+                    <span class="spec-value">V12, 6.5L</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">CÔNG SUẤT TỐI ĐA</span>
+                    <span class="spec-value">770 CV</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">0-100 KM/H</span>
+                    <span class="spec-value">2.8 s</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">TỐC ĐỘ TỐI ĐA</span>
+                    <span class="spec-value">> 350 km/h</span>
+                </div>
+            </div>
+
+            <!-- Gọi hàm addToCart với ID, Tên, Giá(dạng số để dễ tính tổng), Hình ảnh -->
+            <button class="btn-luxury btn-full" 
+                onclick="addToCart('svj_01', 'Aventador SVJ', 517770, 'https://images.unsplash.com/photo-1620882814835-900388a10129?q=80&w=500')">
+                ĐƯA VÀO BỘ SƯU TẬP (GIỎ HÀNG)
+            </button>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
