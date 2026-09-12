@@ -9,19 +9,22 @@
 </head>
 <body>
 
-    <!-- Header (Giữ nguyên như trang chủ) -->
+    <!-- Header (Giữ nguyên như trang chủ & đồng bộ trạng thái đăng nhập) -->
     <header class="navbar">
         <a href="index.html" class="logo">LAMBORGHINI</a>
         <nav>
             <a href="index.html">Models</a>
             <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+            <span id="user-nav">
+                <a href="auth.html">ACCOUNT</a>
+            </span>
         </nav>
     </header>
 
     <!-- Chi tiết sản phẩm -->
     <section class="detail-section">
         <div class="detail-image animate-fade">
-            <img src="https://images.unsplash.com/photo-1620882814835-900388a10129?q=80&w=2070" alt="Aventador SVJ">
+            <img src="image/123.gif" alt="Aventador SVJ" style="width: 100%; max-width: 550px; object-fit: contain; display: block; margin: auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));">
         </div>
         
         <div class="detail-info animate-slide-up">
@@ -47,9 +50,9 @@
                 </div>
             </div>
 
-            <!-- Gọi hàm addToCart với ID, Tên, Giá(dạng số để dễ tính tổng), Hình ảnh -->
+            <!-- Gọi hàm addToCart với ID, Tên, Giá, Hình ảnh local -->
             <button class="btn-luxury btn-full" 
-                onclick="addToCart('svj_01', 'Aventador SVJ', 517770, 'https://images.unsplash.com/photo-1620882814835-900388a10129?q=80&w=500')">
+                onclick="addToCart('svj_01', 'Aventador SVJ', 517770, 'image/123.gif')">
                 ĐƯA VÀO BỘ SƯU TẬP (GIỎ HÀNG)
             </button>
         </div>
@@ -58,5 +61,30 @@
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- Script tự động hiển thị tên tài khoản VIP & Đăng xuất -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userNav = document.getElementById('user-nav');
+            const currentUser = JSON.parse(localStorage.getItem('lambo_logged_in'));
+
+            if (currentUser && currentUser.username) {
+                userNav.innerHTML = `
+                    <span style="color: #d4af37; margin-right: 12px; font-size: 13px; letter-spacing: 1px; font-weight: 600;">
+                        VIP: ${currentUser.username.toUpperCase()}
+                    </span>
+                    <a href="#" style="color: #888; text-decoration: none; font-size: 12px; letter-spacing: 1px; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'" onclick="handleLogout(event)">LOGOUT</a>
+                `;
+            }
+        });
+
+        function handleLogout(e) {
+            e.preventDefault();
+            if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản VIP?')) {
+                localStorage.removeItem('lambo_logged_in');
+                window.location.reload();
+            }
+        }
+    </script>
 </body>
 </html>

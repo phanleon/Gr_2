@@ -11,6 +11,7 @@ body {
     color: #ffffff;
     overflow-x: hidden;
 }
+
 /* =========================================
    MÀN HÌNH INTRO VIDEO
 ========================================= */
@@ -44,6 +45,7 @@ body {
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
 }
+
 /* Navbar */
 .navbar {
     position: fixed;
@@ -61,6 +63,13 @@ body {
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
 }
 
 nav a {
@@ -75,6 +84,24 @@ nav a {
 
 nav a:hover {
     color: #d4af37; /* Màu vàng Gold sang trọng */
+}
+
+/* Khu vực hiển thị thông tin tài khoản đăng nhập trên Navbar */
+#user-nav {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+#user-nav span {
+    color: #d4af37;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+#user-nav a {
+    margin-left: 15px;
 }
 
 /* Hero Section */
@@ -107,11 +134,7 @@ nav a:hover {
     width: 600px; /* Kích thước xe */
     z-index: 2; /* Nằm trên nền (z-index: -1) nhưng dưới chữ (z-index: 10) */
     pointer-events: none; /* Tránh việc khách hàng click nhầm vào ảnh xe */
-    
-    /* Đưa xe ra hẳn ngoài mép trái màn hình chờ sẵn */
     transform: translateX(-150%);
-    
-    /* Thêm bóng đổ để xe nhìn thật hơn, cảm giác bám đường */
     filter: drop-shadow(0px 30px 15px rgba(0,0,0,0.9));
 }
 
@@ -172,6 +195,7 @@ nav a:hover {
     color: #000;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
+
 /* =========================================
    TRANG CHI TIẾT SẢN PHẨM (DETAIL)
 ========================================= */
@@ -186,12 +210,18 @@ nav a:hover {
     flex: 1;
     min-width: 50%;
     height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.04) 0%, #050505 70%);
 }
 
 .detail-image img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-height: 80vh;
+    object-fit: contain; /* Cố định ảnh hiển thị trọn vẹn, không vỡ khung */
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.9));
 }
 
 .detail-info {
@@ -249,6 +279,7 @@ nav a:hover {
     width: 100%;
     padding: 20px;
     margin-top: 20px;
+    opacity: 1; /* Hiển thị rõ ràng trên trang detail */
 }
 
 /* =========================================

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAMBORGHINI | ACCESS</title>
+    <link rel="stylesheet" href="css/auth.css">
+    <!-- Font thanh mảnh chuẩn siêu xe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header đồng bộ với website nhóm -->
+    <header class="luxury-header">
+        <a href="index.html" class="brand-logo">LAMBORGHINI</a>
+        <nav class="nav-links">
+            <a href="index.html">MODELS</a>
+            <a href="cart.html">CART (0)</a>
+        </nav>
+    </header>
+
+    <main class="auth-wrapper">
+        <div class="auth-box">
+            <!-- Huy hiệu Logo Lamborghini -->
+            <div class="logo-crest">
+                <img src="image/logo.png" alt="Lamborghini Shield" onerror="this.style.display='none'">
+            </div>
+
+            <div class="auth-title-container">
+                <span class="sub-label">VIP CLIENT PORTAL</span>
+                <h1 class="main-title" id="form-heading">AUTHENTICATION</h1>
+            </div>
+
+            <!-- Nút chuyển Tab Login / Register -->
+            <div class="tab-switch">
+                <button type="button" class="tab-item active" id="tab-login" onclick="switchAuthMode('login')">SIGN IN</button>
+                <button type="button" class="tab-item" id="tab-register" onclick="switchAuthMode('register')">CREATE ACCOUNT</button>
+            </div>
+
+            <!-- Form Đăng Nhập -->
+            <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+                <div class="field-wrap">
+                    <label>EMAIL / USERNAME</label>
+                    <input type="text" id="login-id" placeholder="ENTER YOUR CREDENTIAL" required autocomplete="off">
+                </div>
+                <div class="field-wrap">
+                    <label>PASSWORD</label>
+                    <input type="password" id="login-pwd" placeholder="••••••••••••" required>
+                </div>
+                
+                <div class="extra-actions">
+                    <label class="remember-me">
+                        <input type="checkbox" checked> <span>REMEMBER CLIENT</span>
+                    </label>
+                    <a href="#" class="forgot-link" onclick="alert('Vui lòng liên hệ Admin đại lý để cấp lại quyền truy cập.')">FORGOT PASSWORD?</a>
+                </div>
+
+                <button type="submit" class="gold-btn">ENTER THE REALM</button>
+            </form>
+
+            <!-- Form Đăng Ký -->
+            <form id="register-form" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="field-wrap">
+                    <label>CLIENT USERNAME</label>
+                    <input type="text" id="reg-id" placeholder="DESIRED USERNAME" required autocomplete="off">
+                </div>
+                <div class="field-wrap">
+                    <label>OFFICIAL EMAIL</label>
+                    <input type="email" id="reg-email" placeholder="CLIENT@LAMBORGHINI-VIP.COM" required autocomplete="off">
+                </div>
+                <div class="field-wrap">
+                    <label>MASTER PASSWORD</label>
+                    <input type="password" id="reg-pwd" placeholder="CREATE SECURE KEY" required>
+                </div>
+
+                <button type="submit" class="gold-btn">REQUEST ACCESS</button>
+            </form>
+
+            <div class="portal-footer">
+                <a href="index.html">← RETURN TO MAIN SHOWROOM</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchAuthMode(mode) {
+            const loginForm = document.getElementById('login-form');
+            const regForm = document.getElementById('register-form');
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+            const heading = document.getElementById('form-heading');
+
+            if (mode === 'login') {
+                loginForm.classList.add('active');
+                regForm.classList.remove('active');
+                tabLogin.classList.add('active');
+                tabReg.classList.remove('active');
+                heading.innerText = 'AUTHENTICATION';
+            } else {
+                regForm.classList.add('active');
+                loginForm.classList.remove('active');
+                tabReg.classList.add('active');
+                tabLogin.classList.remove('active');
+                heading.innerText = 'VIP REGISTRATION';
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('reg-id').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-pwd').value;
+
+            let users = JSON.parse(localStorage.getItem('lambo_users') || '[]');
+
+            const existed = users.some(u => u.username.toLowerCase() === username.toLowerCase() || u.email.toLowerCase() === email.toLowerCase());
+            if (existed) {
+                alert('Tài khoản hoặc Email này đã tồn tại trong hệ thống VIP.');
+                return;
+            }
+
+            users.push({ username, email, password });
+            localStorage.setItem('lambo_users', JSON.stringify(users));
+
+            alert('Đăng ký tài khoản VIP thành công! Vui lòng đăng nhập.');
+            switchAuthMode('login');
+            document.getElementById('login-id').value = username;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const identifier = document.getElementById('login-id').value.trim().toLowerCase();
+            const password = document.getElementById('login-pwd').value;
+
+            let users = JSON.parse(localStorage.getItem('lambo_users') || '[]');
+            const user = users.find(u => 
+                (u.username.toLowerCase() === identifier || u.email.toLowerCase() === identifier) && 
+                u.password === password
+            );
+
+            if (user) {
+                localStorage.setItem('lambo_logged_in', JSON.stringify({
+                    username: user.username,
+                    email: user.email,
+                    loginTime: new Date().toISOString()
+                }));
+                alert(`Xác thực thành công. Chào mừng trở lại, ${user.username.toUpperCase()}!`);
+                window.location.href = 'index.html';
+            } else {
+                alert('Tên đăng nhập hoặc mật khẩu không chính xác!');
+            }
+        }
+    </script>
+</body>
+</html>
