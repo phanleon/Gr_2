@@ -374,3 +374,139 @@ nav a:hover {
     letter-spacing: 2px;
     padding: 50px 0;
 }
+
+/* Danh sách các dòng xe */
+.models-section {
+    min-height: 100vh;
+    padding: 120px 6vw 100px;
+    background: linear-gradient(rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 0.98));
+}
+
+.models-heading {
+    max-width: 760px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.section-eyebrow,
+.model-card-category {
+    color: #d4af37;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.section-eyebrow {
+    margin-bottom: 18px;
+}
+
+.models-heading h2 {
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 200;
+    letter-spacing: 10px;
+    margin-bottom: 20px;
+}
+
+.models-description {
+    color: #999;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.models-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.model-card {
+    overflow: hidden;
+    background: #101010;
+    border: 1px solid #292929;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.model-card:hover {
+    transform: translateY(-8px);
+    border-color: #d4af37;
+}
+
+.model-card-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8);
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.model-card:hover .model-card-image {
+    transform: scale(1.04);
+    filter: brightness(1);
+}
+
+.model-card-content {
+    padding: 26px;
+}
+
+.model-card-category {
+    margin-bottom: 12px;
+}
+
+.model-card-title {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.model-card-description {
+    min-height: 42px;
+    color: #999;
+    font-size: 12px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.model-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-top: 1px solid #2a2a2a;
+    padding-top: 20px;
+}
+
+.model-card-price {
+    color: #d4af37;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.model-card-link {
+    color: #fff;
+    border-bottom: 1px solid #d4af37;
+    padding-bottom: 5px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    .models-section {
+        padding: 100px 20px 70px;
+    }
+
+    .models-heading h2 {
+        letter-spacing: 5px;
+    }
+
+    .models-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .model-card-image {
+        height: 240px;
+    }
+}
