@@ -12,7 +12,7 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-
+// heeloo đây la dư liêu mở các bạn co thể xem và xyyyyyy
 // ==========================================
 // 2. HIỆU ỨNG CHUYỂN ĐỘNG & VIDEO INTRO
 // ==========================================
