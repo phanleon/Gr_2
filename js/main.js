@@ -139,3 +139,39 @@ function removeFromCart(index) {
 }
 
 document.addEventListener("DOMContentLoaded", renderCart);
+
+const models = [
+    {
+        name: "Revuelto",
+        price: "$580,000",
+        video: "videos/revuelto.mp4",
+        description: "Revuelto là mẫu siêu xe mới nhất của Lamborghini, kết hợp giữa hiệu suất vượt trội và thiết kế đột phá."
+    },
+    {
+        name: "Remerario",
+        price: "$620,000",
+        video: "videos/remerario.mp4",
+        description: "Remerario mang đến trải nghiệm lái xe tuyệt vời với động cơ mạnh mẽ và công nghệ tiên tiến."
+    }
+];
+
+function renderModel(modelName) {
+    const modelsGrid = document.getElementById('models-grid');
+    if(!modelsGrid) return;
+    modelsGrid.innerHTML = models.map((model) => 
+    `<article class="model-card">
+        <video class="model-video" controls>
+            <source src="${model.video}" type="video/mp4">
+        </video>
+   
+    <div class = "model-card-content">
+        <h3 class = "model-card-title">${model.name}</h3>
+        <p class = "model-card-description">${model.description}</p>
+
+        <div class = "model-card-footer">
+            <span class = "model-card-price">${model.price}</span>
+            <a class = "model-card-link" href = "detail.html">XEM CHI TIẾT</a>
+        </div>
+    </div>
+    </article>`).join("");
+}
