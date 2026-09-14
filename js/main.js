@@ -12,7 +12,7 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// 
+// hello xin chao cac bạn, mình là AI của OpenAI, rất vui được giúp đỡ bạn!
 // ==========================================
 // 2. HIỆU ỨNG CHUYỂN ĐỘNG & VIDEO INTRO
 // ==========================================
