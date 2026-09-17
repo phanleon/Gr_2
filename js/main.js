@@ -12,7 +12,6 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// hello xin chao cac bạn, mình là AI của OpenAI, rất vui được giúp đỡ bạn!
 // ==========================================
 // 2. HIỆU ỨNG CHUYỂN ĐỘNG & VIDEO INTRO
 // ==========================================
@@ -140,6 +139,7 @@ function removeFromCart(index) {
 
 document.addEventListener("DOMContentLoaded", renderCart);
 
+<<<<<<< HEAD
 const models = [
     {
         name: "Revuelto",
@@ -175,3 +175,24 @@ function renderModel(modelName) {
     </div>
     </article>`).join("");
 }
+=======
+// ==========================================
+// 4. HIỂN THỊ CÁC DÒNG XE
+// ==========================================
+const models = [
+    {
+        name: "REVUELTO",
+        category: "V12 HYBRID",
+        price: "$608,358",
+        image: "image/revuelto.jpg",
+        description: "Mẫu V12 hybrid hiệu suất cao với thiết kế thế hệ mới."
+    },
+    {
+        name: "TEMERARIO",
+        category: "V8 TWIN-TURBO",
+        price: "$357,000",
+        image: "image/temerario.jpg",
+        description: "Siêu xe thể thao mạnh mẽ, kết hợp công nghệ hybrid tiên tiến."
+    }
+];
+
