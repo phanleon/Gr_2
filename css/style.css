@@ -374,3 +374,137 @@ nav a:hover {
     letter-spacing: 2px;
     padding: 50px 0;
 }
+/* =========================================
+   MODAL VIP CONTRACT (CHECKOUT)
+========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-card {
+    background: #0d0d0d;
+    border: 1px solid #d4af37;
+    width: 100%;
+    max-width: 520px;
+    padding: 35px 30px;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+    position: relative;
+    animation: fadeInModal 0.3s ease-out;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    text-align: center;
+    border-bottom: 1px solid #222;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.gold-badge {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #d4af37;
+    font-weight: 600;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    letter-spacing: 4px;
+    font-weight: 300;
+    margin-top: 5px;
+    color: #fff;
+}
+
+#contract-code {
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 2px;
+    margin-top: 4px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+.info-row strong {
+    color: #fff;
+}
+
+.divider {
+    height: 1px;
+    background: #222;
+    margin: 15px 0;
+}
+
+.purchased-cars .item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.total-row {
+    font-size: 14px;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-cancel {
+    flex: 1;
+    background: transparent;
+    border: 1px solid #444;
+    color: #888;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+
+.btn-cancel:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+.btn-confirm {
+    flex: 2;
+    background: #d4af37;
+    border: none;
+    color: #000;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+
+.btn-confirm:hover {
+    background: #f0c950;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}

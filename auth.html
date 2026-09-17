@@ -22,7 +22,8 @@
     </header>
 
     <main class="auth-wrapper">
-        <div class="auth-box">
+        <!-- FORM ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU (Hiện khi chưa đăng nhập) -->
+        <div class="auth-box" id="auth-box">
             <!-- Huy hiệu Logo Lamborghini -->
             <div class="logo-crest">
                 <img src="image/logo.png" alt="Lamborghini Shield" onerror="this.style.display='none'">
@@ -34,7 +35,7 @@
             </div>
 
             <!-- Nút chuyển Tab Login / Register -->
-            <div class="tab-switch">
+            <div class="tab-switch" id="auth-tabs">
                 <button type="button" class="tab-item active" id="tab-login" onclick="switchAuthMode('login')">SIGN IN</button>
                 <button type="button" class="tab-item" id="tab-register" onclick="switchAuthMode('register')">CREATE ACCOUNT</button>
             </div>
@@ -54,7 +55,7 @@
                     <label class="remember-me">
                         <input type="checkbox" checked> <span>REMEMBER CLIENT</span>
                     </label>
-                    <a href="#" class="forgot-link" onclick="alert('Vui lòng liên hệ Admin đại lý để cấp lại quyền truy cập.')">FORGOT PASSWORD?</a>
+                    <a href="#" class="forgot-link" onclick="switchAuthMode('forgot')">FORGOT PASSWORD?</a>
                 </div>
 
                 <button type="submit" class="gold-btn">ENTER THE REALM</button>
@@ -78,32 +79,134 @@
                 <button type="submit" class="gold-btn">REQUEST ACCESS</button>
             </form>
 
+            <!-- Form Quên Mật Khẩu -->
+            <form id="forgot-form" class="auth-form" onsubmit="handleResetPassword(event)">
+                <div class="field-wrap">
+                    <label>VERIFIED EMAIL</label>
+                    <input type="email" id="forgot-email" placeholder="ENTER REGISTERED EMAIL" required autocomplete="off">
+                </div>
+                <div class="field-wrap">
+                    <label>NEW MASTER PASSWORD</label>
+                    <input type="password" id="forgot-new-pwd" placeholder="ENTER NEW SECURE KEY" required>
+                </div>
+                <div class="field-wrap">
+                    <label>CONFIRM NEW PASSWORD</label>
+                    <input type="password" id="forgot-confirm-pwd" placeholder="CONFIRM NEW SECURE KEY" required>
+                </div>
+
+                <button type="submit" class="gold-btn">UPDATE CREDENTIALS</button>
+                
+                <div style="text-align: center; margin-top: 10px;">
+                    <a href="#" style="color: #d4af37; font-size: 11px; letter-spacing: 1px; text-decoration: none;" onclick="switchAuthMode('login')">← BACK TO SIGN IN</a>
+                </div>
+            </form>
+
             <div class="portal-footer">
                 <a href="index.html">← RETURN TO MAIN SHOWROOM</a>
+            </div>
+        </div>
+
+        <!-- KHU VỰC HỒ SƠ & BỘ SƯU TẬP GARAGE VIP (Hiện khi đã đăng nhập) -->
+        <div id="profile-box" class="auth-box" style="display: none; max-width: 580px;">
+            <div class="brand-header" style="text-align: center; margin-bottom: 20px;">
+                <span class="sub-label">EXCLUSIVE OWNER SUITE</span>
+                <h2 id="profile-vip-name" style="letter-spacing: 4px; color: #d4af37; font-size: 20px; font-weight: 300;">VIP GARAGE</h2>
+                <p id="profile-vip-email" style="color: #777; font-size: 11px; margin-top: 5px; letter-spacing: 1px;"></p>
+            </div>
+
+            <div style="border-top: 1px solid #222; padding-top: 20px; margin-bottom: 25px;">
+                <h3 style="font-size: 11px; letter-spacing: 2px; color: #888; margin-bottom: 15px; font-weight: 500;">BỘ SƯU TẬP SIÊU XE ĐÃ SỞ HỮU</h3>
+                <div id="orders-container" style="max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 5px;">
+                    <!-- Lịch sử hợp đồng sẽ được JS render tại đây -->
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+                <button type="button" class="gold-btn" style="flex: 2; margin-top: 0;" onclick="window.location.href='index.html'">SHOWROOM CHÍNH</button>
+                <button type="button" style="flex: 1; background: transparent; border: 1px solid #ff4444; color: #ff4444; font-size: 10px; letter-spacing: 2px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.background='#ff4444'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ff4444';" onclick="logoutFromAuth()">LOGOUT</button>
             </div>
         </div>
     </main>
 
     <script>
+        // Kiểm tra trạng thái đăng nhập khi vào trang auth.html
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('lambo_logged_in'));
+            const authBox = document.getElementById('auth-box');
+            const profileBox = document.getElementById('profile-box');
+
+            if (currentUser && currentUser.username) {
+                authBox.style.display = 'none';
+                profileBox.style.display = 'block';
+
+                document.getElementById('profile-vip-name').innerText = 'CLIENT: ' + currentUser.username.toUpperCase();
+                document.getElementById('profile-vip-email').innerText = currentUser.email || 'VERIFIED VIP CLIENT';
+
+                renderGarageOrders(currentUser.username);
+            }
+        });
+
+        function renderGarageOrders(username) {
+            const orderKey = `orders_${username.toLowerCase()}`;
+            const orders = JSON.parse(localStorage.getItem(orderKey) || '[]');
+            const container = document.getElementById('orders-container');
+
+            if (orders.length === 0) {
+                container.innerHTML = '<p style="color: #666; font-size: 11px; text-align: center; padding: 25px 0; letter-spacing: 1px;">Hiện chưa có siêu xe nào trong bộ sưu tập Garage của bạn.</p>';
+                return;
+            }
+
+            container.innerHTML = orders.map(order => `
+                <div style="background: #0d0d0d; border: 1px solid #222; padding: 14px; border-left: 2px solid #d4af37;">
+                    <div style="display: flex; justify-content: space-between; font-size: 10px; letter-spacing: 1px; color: #d4af37; margin-bottom: 8px;">
+                        <span>${order.contractId}</span>
+                        <span style="color: #666;">${order.date}</span>
+                    </div>
+                    ${order.items.map(car => `
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px;">
+                            <span style="color: #fff; letter-spacing: 1px;">✦ ${car.name}</span>
+                            <span style="color: #aaa;">$${Number(car.price).toLocaleString()}</span>
+                        </div>
+                    `).join('')}
+                    <div style="text-align: right; border-top: 1px solid #1a1a1a; margin-top: 8px; padding-top: 6px; font-size: 11px; color: #888;">
+                        Tổng hợp đồng: <strong style="color: #d4af37;">${order.total}</strong>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function logoutFromAuth() {
+            if (confirm('Bạn có muốn đăng xuất khỏi tài khoản VIP?')) {
+                localStorage.removeItem('lambo_logged_in');
+                window.location.reload();
+            }
+        }
+
         function switchAuthMode(mode) {
             const loginForm = document.getElementById('login-form');
             const regForm = document.getElementById('register-form');
+            const forgotForm = document.getElementById('forgot-form');
             const tabLogin = document.getElementById('tab-login');
             const tabReg = document.getElementById('tab-register');
             const heading = document.getElementById('form-heading');
 
+            loginForm.classList.remove('active');
+            regForm.classList.remove('active');
+            forgotForm.classList.remove('active');
+            tabLogin.classList.remove('active');
+            tabReg.classList.remove('active');
+
             if (mode === 'login') {
                 loginForm.classList.add('active');
-                regForm.classList.remove('active');
                 tabLogin.classList.add('active');
-                tabReg.classList.remove('active');
                 heading.innerText = 'AUTHENTICATION';
-            } else {
+            } else if (mode === 'register') {
                 regForm.classList.add('active');
-                loginForm.classList.remove('active');
                 tabReg.classList.add('active');
-                tabLogin.classList.remove('active');
                 heading.innerText = 'VIP REGISTRATION';
+            } else if (mode === 'forgot') {
+                forgotForm.classList.add('active');
+                heading.innerText = 'RESET CREDENTIAL';
             }
         }
 
@@ -151,6 +254,35 @@
             } else {
                 alert('Tên đăng nhập hoặc mật khẩu không chính xác!');
             }
+        }
+
+        function handleResetPassword(e) {
+            e.preventDefault();
+            const email = document.getElementById('forgot-email').value.trim().toLowerCase();
+            const newPwd = document.getElementById('forgot-new-pwd').value;
+            const confirmPwd = document.getElementById('forgot-confirm-pwd').value;
+
+            if (newPwd !== confirmPwd) {
+                alert('Mật khẩu xác nhận không khớp! Vui lòng nhập lại.');
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('lambo_users') || '[]');
+            const userIndex = users.findIndex(u => u.email.toLowerCase() === email);
+
+            if (userIndex === -1) {
+                alert('Email này chưa được đăng ký trong hệ thống VIP!');
+                return;
+            }
+
+            users[userIndex].password = newPwd;
+            localStorage.setItem('lambo_users', JSON.stringify(users));
+
+            alert(`Mật khẩu cho tài khoản ${users[userIndex].username.toUpperCase()} đã được cập nhật thành công!`);
+            
+            switchAuthMode('login');
+            document.getElementById('login-id').value = users[userIndex].username;
+            document.getElementById('login-pwd').value = '';
         }
     </script>
 </body>
