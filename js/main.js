@@ -12,7 +12,7 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// 
+
 // ==========================================
 // 2. HIỆU ỨNG CHUYỂN ĐỘNG & VIDEO INTRO
 // ==========================================
@@ -140,38 +140,60 @@ function removeFromCart(index) {
 
 document.addEventListener("DOMContentLoaded", renderCart);
 
+// ==========================================
+// 4. HIỂN THỊ CÁC DÒNG XE
+// ==========================================
 const models = [
     {
-        name: "Revuelto",
-        price: "$580,000",
-        video: "videos/revuelto.mp4",
-        description: "Revuelto là mẫu siêu xe mới nhất của Lamborghini, kết hợp giữa hiệu suất vượt trội và thiết kế đột phá."
+        name: "REVUELTO",
+        category: "V12 HYBRID",
+        price: "$608,358",
+        image: "image/revuelto.jpg",
+        description: "Mẫu V12 hybrid hiệu suất cao với thiết kế thế hệ mới."
     },
     {
-        name: "Remerario",
-        price: "$620,000",
-        video: "videos/remerario.mp4",
-        description: "Remerario mang đến trải nghiệm lái xe tuyệt vời với động cơ mạnh mẽ và công nghệ tiên tiến."
+        name: "TEMERARIO",
+        category: "V8 TWIN-TURBO",
+        price: "$357,000",
+        image: "image/temerario.jpg",
+        description: "Siêu xe thể thao mạnh mẽ, kết hợp công nghệ hybrid tiên tiến."
     }
 ];
 
-function renderModel(modelName) {
-    const modelsGrid = document.getElementById('models-grid');
-    if(!modelsGrid) return;
-    modelsGrid.innerHTML = models.map((model) => 
-    `<article class="model-card">
-        <video class="model-video" controls>
-            <source src="${model.video}" type="video/mp4">
-        </video>
-   
-    <div class = "model-card-content">
-        <h3 class = "model-card-title">${model.name}</h3>
-        <p class = "model-card-description">${model.description}</p>
+function renderModels() {
+    const modelsGrid = document.getElementById("models-grid");
 
-        <div class = "model-card-footer">
-            <span class = "model-card-price">${model.price}</span>
-            <a class = "model-card-link" href = "detail.html">XEM CHI TIẾT</a>
-        </div>
-    </div>
-    </article>`).join("");
+    if (!modelsGrid) return;
+
+    modelsGrid.innerHTML = models.map((model) => `
+        <article class="model-card">
+            <img class="model-card-image" src="${model.image}" alt="${model.name}">
+            <div class="model-card-content">
+                <p class="model-card-category">${model.category}</p>
+                <h3 class="model-card-title">${model.name}</h3>
+                <p class="model-card-description">${model.description}</p>
+                <div class="model-card-footer">
+                    <span class="model-card-price">${model.price}</span>
+                    <a class="model-card-link" href="detail.html">XEM CHI TIẾT</a>
+                </div>
+            </div>
+        </article>
+    `).join("");
 }
+
+function setupModelsNavigation() {
+    const modelsLink = document.getElementById("models-link");
+    const modelsSection = document.getElementById("models");
+
+    if (!modelsLink || !modelsSection) return;
+
+    modelsLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        modelsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderModels();
+    setupModelsNavigation();
+});
