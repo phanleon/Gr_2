@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>InternetLAN Go</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">IL</div>
+        <div>
+          <h1>InternetLAN</h1>
+          <p>Go Networking</p>
+        </div>
+      </div>
+
+      <div class="status-card">
+        <span id="statusDot" class="dot offline"></span>
+        <div>
+          <strong id="statusText">Chưa kết nối</strong>
+          <small id="virtualIpText">Virtual IP: —</small>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-btn active" data-tab="network">Mạng</button>
+        <button class="nav-btn" data-tab="chat">Chat</button>
+        <button class="nav-btn" data-tab="files">Truyền file</button>
+        <button class="nav-btn" data-tab="logs">Nhật ký</button>
+      </nav>
+
+      <div class="side-footer">
+        <span>Local UI</span>
+        <strong>127.0.0.1:8787</strong>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h2 id="pageTitle">Kết nối mạng</h2>
+          <p id="pageSubtitle">Tạo mạng hoặc tham gia một Host qua Internet.</p>
+        </div>
+        <button id="disconnectBtn" class="danger ghost hidden">Ngắt kết nối</button>
+      </header>
+
+      <section id="tab-network" class="tab active">
+        <div class="grid two">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Tạo mạng</h3>
+                <p>Máy này sẽ trở thành Host/Relay.</p>
+              </div>
+              <span class="pill">HOST</span>
+            </div>
+
+            <label>Tên máy</label>
+            <input id="hostName" placeholder="VD: Minh-PC" />
+
+            <label>Port</label>
+            <input id="hostPort" type="number" value="50000" />
+
+            <label>Password mạng</label>
+            <input id="hostPassword" type="password" placeholder="Password đủ mạnh" />
+
+            <button id="startHostBtn" class="primary">Tạo mạng</button>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Tham gia mạng</h3>
+                <p>Nhập IP/hostname của Host.</p>
+              </div>
+              <span class="pill">CLIENT</span>
+            </div>
+
+            <label>Tên máy</label>
+            <input id="clientName" placeholder="VD: Laptop-A" />
+
+            <label>Server IP / Hostname</label>
+            <input id="serverAddress" placeholder="VD: 192.168.1.10 hoặc public IP" />
+
+            <div class="inline">
+              <div>
+                <label>Port</label>
+                <input id="clientPort" type="number" value="50000" />
+              </div>
+              <div>
+                <label>Password</label>
+                <input id="clientPassword" type="password" placeholder="Password" />
+              </div>
+            </div>
+
+            <button id="joinBtn" class="primary">Kết nối</button>
+          </div>
+        </div>
+
+        <div class="grid two lower">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Thiết bị trong mạng</h3>
+                <p>Cập nhật tự động.</p>
+              </div>
+              <span id="peerCount" class="pill neutral">0 thiết bị</span>
+            </div>
+            <div id="peerList" class="peer-list empty-state">Chưa có thiết bị.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>IP trên máy hiện tại</h3>
+                <p>Dùng IP LAN để test trong cùng Wi-Fi.</p>
+              </div>
+            </div>
+            <div id="localIps" class="ip-list"></div>
+            <div class="note">
+              Qua Internet, Host thường cần Public IP + Port Forwarding. Nếu bị CGNAT, bản này chưa xuyên NAT tự động.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-chat" class="tab">
+        <div class="card tall">
+          <div class="card-head">
+            <div>
+              <h3>Chat trong mạng</h3>
+              <p>Chat nhóm hoặc gửi riêng tới một thiết bị.</p>
+            </div>
+            <select id="chatTarget"><option value="*">Tất cả</option></select>
+          </div>
+
+          <div id="chatMessages" class="chat-window"></div>
+
+          <div class="chat-compose">
+            <input id="chatInput" placeholder="Nhập tin nhắn..." />
+            <button id="sendChatBtn" class="primary compact">Gửi</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-files" class="tab">
+        <div class="grid two">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Gửi file</h3>
+                <p>Tối đa 100 MB mỗi lần gửi.</p>
+              </div>
+            </div>
+
+            <label>Người nhận</label>
+            <select id="fileTarget"><option value="*">Tất cả</option></select>
+
+            <label>Chọn file</label>
+            <input id="fileInput" type="file" />
+
+            <button id="sendFileBtn" class="primary">Gửi file</button>
+            <div id="fileProgress" class="progress-wrap hidden">
+              <div class="progress"><div id="progressBar"></div></div>
+              <small id="progressText">Đang gửi...</small>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>File đã nhận</h3>
+                <p>Lưu trong thư mục <code>downloads</code>.</p>
+              </div>
+            </div>
+            <div id="receivedFiles" class="file-list empty-state">Chưa nhận file nào.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-logs" class="tab">
+        <div class="card tall">
+          <div class="card-head">
+            <div>
+              <h3>Nhật ký kết nối</h3>
+              <p>Sự kiện hệ thống, file và lỗi.</p>
+            </div>
+            <button id="clearLogBtn" class="ghost">Xóa giao diện log</button>
+          </div>
+          <div id="logList" class="log-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
