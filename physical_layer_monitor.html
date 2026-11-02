@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đo Tốc Độ Mạng</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for real-time speed visualizer -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            cyber: {
+              bg: '#0a0d14',
+              card: '#121824',
+              border: '#1e293b',
+              accent: '#3b82f6',
+              cyan: '#06b6d4',
+              neonGreen: '#10b981',
+              pink: '#ec4899'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background:#141526; color:#f1f5f9; min-height:100vh; }
+    .panel { background:#1b1d38; border:1px solid #262a4a; border-radius:20px; }
+    .tile { background:#1b1d38; border:1px solid #262a4a; border-radius:16px; padding:14px 16px; text-align:center; }
+    .tile-label { font-size:12px; color:#9aa0c3; margin-bottom:2px; }
+    .tile-num { font-size:30px; line-height:1.15; font-weight:300; font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; }
+    .tile-unit { font-size:11px; color:#6b7099; }
+    .gauge-bg { stroke:#262a4a; }
+    .gauge-value { transition: stroke-dasharray .2s linear; }
+    #liveWrap, #againBtn { display:none; }
+    .running #liveWrap, .done #liveWrap { display:flex; }
+    .running #goWrap, .done #goWrap, .running #goHint, .done #goHint { display:none; }
+    .done #againBtn { display:inline-flex; align-items:center; }
+    .running #gpsBtn { pointer-events:none; opacity:.5; }
+    @keyframes go-pulse { 0%,100% { box-shadow:0 0 0 0 rgba(30,224,196,.35); } 50% { box-shadow:0 0 0 14px rgba(30,224,196,0); } }
+    .go-pulse { animation: go-pulse 2.4s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .go-pulse { animation:none; } }
+  </style>
+</head>
+<body class="font-sans antialiased pb-10">
+  <header class="max-w-5xl mx-auto px-4 h-16 flex items-center gap-3">
+    <div class="w-9 h-9 rounded-full border-2 border-[#1ee0c4] flex items-center justify-center text-[#1ee0c4]"><i class="fa-solid fa-gauge-high"></i></div>
+    <h1 class="text-xl font-bold tracking-tight">Đo Tốc Độ Mạng</h1>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 space-y-5">
+    <!-- Dải kết quả -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="tile relative overflow-hidden">
+        <div id="dlActiveBar" class="absolute bottom-0 left-0 h-[3px] bg-[#20d5ff] w-0 transition-all duration-[8000ms] ease-linear"></div>
+        <p class="tile-label"><i class="fa-solid fa-circle-arrow-down text-[#20d5ff] mr-1.5"></i>Download</p>
+        <p class="tile-num text-[#20d5ff]" id="downloadVal">0.00</p><p class="tile-unit">Mbps</p>
+      </div>
+      <div class="tile relative overflow-hidden">
+        <div id="ulActiveBar" class="absolute bottom-0 left-0 h-[3px] bg-[#b86bff] w-0 transition-all duration-[8000ms] ease-linear"></div>
+        <p class="tile-label"><i class="fa-solid fa-circle-arrow-up text-[#b86bff] mr-1.5"></i>Upload</p>
+        <p class="tile-num text-[#b86bff]" id="uploadVal">0.00</p><p class="tile-unit">Mbps</p>
+      </div>
+      <div class="tile">
+        <p class="tile-label"><i class="fa-solid fa-stopwatch text-slate-400 mr-1.5"></i>Ping</p>
+        <p class="tile-num" id="pingVal">--</p><p class="tile-unit">ms</p>
+      </div>
+      <div class="tile">
+        <p class="tile-label"><i class="fa-solid fa-wave-square text-slate-400 mr-1.5"></i>Jitter</p>
+        <p class="tile-num" id="jitterVal">-- ms</p><p id="lossVal" class="tile-unit text-emerald-400">Mất gói: --</p>
+      </div>
+    </section>
+
+    <!-- Gauge + nút GO -->
+    <section class="panel flex flex-col items-center py-8">
+      <div class="relative w-[300px] h-[300px] sm:w-[360px] sm:h-[360px]">
+        <svg class="w-full h-full" viewBox="-14 -14 228 228" aria-hidden="true">
+          <defs>
+            <linearGradient id="gauge-gradient" gradientUnits="userSpaceOnUse" x1="20" y1="180" x2="180" y2="20">
+              <stop offset="0%" stop-color="#1ee0c4"/><stop offset="55%" stop-color="#20d5ff"/><stop offset="100%" stop-color="#b86bff"/>
+            </linearGradient>
+          </defs>
+          <g transform="rotate(135 100 100)">
+            <circle cx="100" cy="100" r="80" class="gauge-bg" stroke-width="10" fill="none" stroke-dasharray="376.99 502.65" stroke-linecap="round"/>
+            <circle id="gaugeCircle" cx="100" cy="100" r="80" class="gauge-value" stroke="url(#gauge-gradient)" stroke-width="10" fill="none" stroke-dasharray="0.01 502.65" stroke-linecap="round"/>
+          </g>
+          <g id="gaugeTicks" fill="#6b7099" font-size="7" text-anchor="middle" dominant-baseline="middle"></g>
+        </svg>
+
+        <div id="goWrap" class="absolute inset-0 flex items-center justify-center">
+          <button id="startBtn" type="button" onclick="startSpeedTest()" aria-label="Bắt đầu đo tốc độ mạng"
+            class="go-pulse w-40 h-40 sm:w-44 sm:h-44 rounded-full border-[3px] border-[#1ee0c4] text-[#1ee0c4] text-4xl font-bold tracking-wider hover:bg-[#1ee0c4]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition cursor-pointer">
+            <span>GO</span>
+          </button>
+        </div>
+
+        <div id="liveWrap" class="absolute inset-0 flex-col items-center justify-center text-center pointer-events-none">
+          <span id="stageLabel" class="text-xs text-slate-400 mb-1 px-8">SẴN SÀNG</span>
+          <span id="gaugeSpeed" class="text-6xl sm:text-7xl font-light font-mono tabular-nums">0.0</span>
+          <span id="unitLabel" class="text-sm text-slate-400 mt-1">Mbps</span>
+        </div>
+      </div>
+      <p id="goHint" class="text-sm text-slate-400 -mt-2">Bấm GO để bắt đầu đo</p>
+      <button id="againBtn" type="button" onclick="startSpeedTest()" class="mt-2 px-6 py-2 rounded-full border border-[#1ee0c4] text-[#1ee0c4] text-sm font-semibold hover:bg-[#1ee0c4]/10 cursor-pointer">
+        <i class="fa-solid fa-rotate-right mr-2"></i>Đo lại
+      </button>
+
+      <div class="w-full mt-6 px-4 sm:px-8">
+        <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <span>Băng thông theo thời gian</span><span id="chartStatus" class="font-mono text-[#1ee0c4]">Đang chờ...</span>
+        </div>
+        <div class="h-28 w-full"><canvas id="speedChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- Thông tin kết nối -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="tile text-left flex items-start gap-3">
+        <i class="fa-solid fa-house-signal text-xl text-slate-400 mt-1"></i>
+        <div class="min-w-0">
+          <p class="tile-label">Nhà mạng</p>
+          <p id="ispName" class="font-semibold text-lg leading-tight">Đang nhận diện...</p>
+          <p id="ispRaw" class="text-xs text-slate-500 mt-0.5 break-words">&nbsp;</p>
+          <p id="ipAddr" class="text-xs text-slate-400 font-mono mt-0.5 break-all">IP: ---</p>
+        </div>
+      </div>
+      <div class="tile text-left flex items-start gap-3">
+        <i class="fa-solid fa-location-dot text-xl text-slate-400 mt-1"></i>
+        <div class="min-w-0">
+          <p class="tile-label">Vị trí của bạn</p>
+          <p id="locationText" class="font-semibold text-lg leading-tight">Đang xác định...</p>
+          <p id="locationSrc" class="text-xs text-slate-500 mt-0.5">&nbsp;</p>
+          <button id="gpsBtn" type="button" onclick="useGPSLocation()" class="mt-1 text-xs text-[#1ee0c4] hover:underline cursor-pointer">
+            <i class="fa-solid fa-crosshairs mr-1"></i>Dùng GPS để chính xác hơn
+          </button>
+        </div>
+      </div>
+      <div class="tile text-left flex items-start gap-3">
+        <i class="fa-solid fa-server text-xl text-slate-400 mt-1"></i>
+        <div class="min-w-0">
+          <p class="tile-label">Máy chủ đo &amp; kết nối</p>
+          <p id="serverText" class="font-semibold text-lg leading-tight">Cloudflare</p>
+          <p class="text-xs text-slate-500 mt-0.5">Loại kết nối: <span id="mediaType">--</span></p>
+          <p id="linkSpeedEst" class="text-xs text-slate-500">&nbsp;</p>
+        </div>
+      </div>
+    </section>
+    <!-- Liên hệ Tầng Vật Lý -->
+    <section class="panel p-5">
+      <h2 class="text-base font-semibold"><i class="fa-solid fa-layer-group text-[#1ee0c4] mr-2"></i>Liên hệ với Tầng Vật Lý (Layer 1)</h2>
+      <p class="text-xs text-slate-400 mt-1 mb-4">Phần mềm không điều khiển trực tiếp tầng vật lý. Nó đọc thông số qua hệ điều hành (psutil) và đo ảnh hưởng của đường truyền lên tốc độ, độ trễ, độ ổn định.</p>
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="tile text-left text-sm space-y-1">
+          <p class="tile-label">Card mạng (thông số vật lý)</p>
+          <p>Card: <span id="nicName" class="font-semibold">--</span></p>
+          <p>Tốc độ liên kết: <span id="nicSpeed" class="font-semibold">--</span></p>
+          <p>Duplex: <span id="nicDuplex">--</span></p>
+          <p class="text-xs text-slate-500" id="nicSrc">Chưa chạy agent Python (physical_layer_agent.py). Bạn có thể nhập tay bên dưới.</p>
+          <label id="linkManual" class="block text-xs text-slate-400 pt-1">Nhập tay (Settings › Network › Ethernet › Link speed):
+            <select id="linkSelect" onchange="reRenderPhysical()" class="ml-1 bg-[#141526] border border-[#262a4a] rounded px-1 py-0.5 text-slate-200">
+              <option value="0">Chưa rõ</option><option value="10">10 Mbps</option><option value="100">100 Mbps</option>
+              <option value="1000">1000 Mbps (1 Gbps)</option><option value="2500">2500 Mbps</option>
+            </select>
+          </label>
+        </div>
+        <div class="tile text-left text-sm space-y-2">
+          <p class="tile-label">Khái niệm tầng vật lý ↔ chỉ số đo được</p>
+          <p><b>Bit rate</b> ↔ Download/Upload: <span id="mapBit" class="font-mono">--</span></p>
+          <p><b>Độ trễ truyền dẫn</b> ↔ Ping: <span id="mapDelay" class="font-mono">--</span></p>
+          <p><b>Nhiễu &amp; suy hao</b> ↔ Jitter / Mất gói: <span id="mapNoise" class="font-mono">--</span></p>
+        </div>
+      </div>
+      <div id="diagBox" class="mt-3 rounded-xl border border-[#262a4a] bg-[#141526] p-3 text-sm text-slate-300">Hãy bấm GO để có chẩn đoán.</div>
+    </section>
+  </main>
+
+<script>
+    // =====================================================================
+    //  CẤU HÌNH
+    // =====================================================================
+    const CF = 'https://speed.cloudflare.com';   // Server đo của Cloudflare (hỗ trợ CORS)
+    const CFG = {
+      pingCount: 15,          // số lần đo ping
+      pingTimeoutMs: 2000,    // quá thời gian này = coi như mất gói
+      dlDurationMs: 8000,     // thời gian đo download
+      ulDurationMs: 8000,     // thời gian đo upload
+      warmupMs: 1000,         // bỏ qua giai đoạn TCP slow-start khi tính kết quả cuối
+      dlStreams: 4,           // số luồng tải song song
+      ulStreams: 3,           // số luồng upload song song
+      dlChunkBytes: 25_000_000,
+      ulChunkBytes: 4_000_000,
+      gaugeMaxMbps: 1000      // thang đo gauge (log): 0 → 1 Gbps
+    };
+
+    // =====================================================================
+    //  STATE & ELEMENTS
+    // =====================================================================
+    let speedChart;
+    let isTesting = false;
+    let netInfo = null;       // thông tin IP/ISP/vị trí đã chuẩn hoá
+
+    const $ = id => document.getElementById(id);
+    const pingValEl = $('pingVal'), downloadValEl = $('downloadVal'), uploadValEl = $('uploadVal');
+    const gaugeSpeedEl = $('gaugeSpeed'), stageLabelEl = $('stageLabel'), unitLabelEl = $('unitLabel');
+    const startBtn = $('startBtn'), gaugeCircle = $('gaugeCircle'), chartStatus = $('chartStatus');
+
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    // =====================================================================
+    //  NHẬN DIỆN NHÀ MẠNG (ISP)
+    //  Ưu tiên khớp theo tên tổ chức, sau đó khớp theo số ASN.
+    //  Muốn thêm nhà mạng: thêm 1 dòng vào ISP_DB.
+    // =====================================================================
+    const ISP_DB = [
+      { name: 'FPT Telecom', re: /fpt/i,                                   asn: [18403],              color: 'text-orange-400' },
+      { name: 'Viettel',     re: /viettel/i,                               asn: [7552, 24086, 38731], color: 'text-red-400' },
+      { name: 'VNPT',        re: /vnpt|vinaphone|vietnam posts and tele|vdc\b/i, asn: [45899, 7643],  color: 'text-sky-400' },
+      { name: 'CMC Telecom', re: /cmc\s*tele|cmc corp/i,                   asn: [45903],              color: 'text-emerald-400' },
+      { name: 'MobiFone',    re: /mobifone/i,                              asn: [],                   color: 'text-blue-400' },
+      { name: 'SPT',         re: /saigon postel|\bspt\b/i,                 asn: [],                   color: 'text-yellow-400' },
+      { name: 'SCTV',        re: /sctv|saigon tourist cable/i,             asn: [],                   color: 'text-pink-400' },
+      { name: 'NetNam',      re: /netnam/i,                                asn: [],                   color: 'text-teal-400' },
+      { name: 'Vietnamobile',re: /vietnamobile/i,                          asn: [],                   color: 'text-amber-400' }
+    ];
+
+    function detectISP(info) {
+      const text = `${info.org || ''} ${info.isp || ''}`;
+      const asn = Number(String(info.asn || '').replace(/\D/g, '')) || 0;
+      for (const isp of ISP_DB) {
+        if (isp.re.test(text) || (asn && isp.asn.includes(asn))) return isp;
+      }
+      return null;
+    }
+
+    // =====================================================================
+    //  CHUẨN HOÁ TÊN ĐỊA ĐIỂM (Ho Chi Minh City → TP. Hồ Chí Minh ...)
+    // =====================================================================
+    const stripVN = s => String(s || '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+      .toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+
+    const VN_PLACES = [
+      [/ho chi minh|sai ?gon|\bhcmc?\b/, 'TP. Hồ Chí Minh'],
+      [/ha ?noi/,                       'Hà Nội'],
+      [/da ?nang/,                      'Đà Nẵng'],
+      [/hai ?phong/,                    'Hải Phòng'],
+      [/can ?tho/,                      'Cần Thơ'],
+      [/\bhue\b|thua thien/,            'Huế']
+    ];
+
+    function normalizePlace(...candidates) {
+      for (const c of candidates) {
+        const key = stripVN(c);
+        if (!key) continue;
+        for (const [re, label] of VN_PLACES) if (re.test(key)) return label;
+      }
+      return candidates.find(Boolean) || '';
+    }
+
+    const COLO_NAMES = {
+      SGN: 'TP. Hồ Chí Minh', HAN: 'Hà Nội', DAD: 'Đà Nẵng',
+      SIN: 'Singapore', HKG: 'Hồng Kông', BKK: 'Bangkok', KUL: 'Kuala Lumpur', NRT: 'Tokyo'
+    };
+
+    function countryName(code) {
+      try { return new Intl.DisplayNames(['vi'], { type: 'region' }).of(code); }
+      catch (e) { return code; }
+    }
+
+    // =====================================================================
+    //  LẤY IP / ISP / VỊ TRÍ  (thử lần lượt 3 nguồn, nguồn nào lỗi thì chuyển sang nguồn kế)
+    // =====================================================================
+    async function getJSON(url, timeout = 5000) {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), timeout);
+      try {
+        const r = await fetch(url, { signal: ctl.signal, cache: 'no-store' });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return await r.json();
+      } finally { clearTimeout(timer); }
+    }
+
+    const IP_SOURCES = [
+      {
+        name: 'Cloudflare',
+        run: async () => {
+          const d = await getJSON(`${CF}/meta`);
+          const colo = typeof d.colo === 'object' && d.colo ? (d.colo.iata || '') : (d.colo || '');
+          return { ip: d.clientIp, asn: d.asn, org: d.asOrganization, city: d.city, region: d.region,
+                   countryCode: d.country, colo };
+        }
+      },
+      {
+        name: 'ipwho.is',
+        run: async () => {
+          const d = await getJSON('https://ipwho.is/');
+          if (d.success === false) throw new Error('ipwho failed');
+          return { ip: d.ip, asn: d.connection && d.connection.asn, org: d.connection && d.connection.org,
+                   isp: d.connection && d.connection.isp, city: d.city, region: d.region, countryCode: d.country_code };
+        }
+      },
+      {
+        name: 'ipapi.co',
+        run: async () => {
+          const d = await getJSON('https://ipapi.co/json/');
+          if (d.error) throw new Error('ipapi failed');
+          return { ip: d.ip, asn: d.asn, org: d.org, city: d.city, region: d.region, countryCode: d.country_code };
+        }
+      }
+    ];
+
+    async function fetchNetworkDetails() {
+      let info = null;
+      for (const src of IP_SOURCES) {
+        try { info = await src.run(); info.source = src.name; break; } catch (e) { /* thử nguồn kế */ }
+      }
+      if (!info) {
+        $('ispName').innerText = 'Không xác định được';
+        $('ispRaw').innerText = 'Không kết nối được dịch vụ tra cứu IP (có thể bị chặn bởi trình chặn quảng cáo/VPN).';
+        $('locationText').innerText = 'Không xác định';
+        $('locationSrc').innerText = '';
+        return;
+      }
+      netInfo = info;
+      renderISP(info);
+      renderLocation(info);
+      // Nếu đã có GPS từ trước trong phiên, ưu tiên GPS
+      const saved = sessionStorage.getItem('gpsLocation');
+      if (saved) { try { applyGPS(JSON.parse(saved)); } catch (e) {} }
+    }
+
+    function renderISP(info) {
+      const isp = detectISP(info);
+      const el = $('ispName');
+      el.className = 'font-semibold text-sm leading-tight ' + (isp ? isp.color : 'text-slate-100');
+      el.innerText = isp ? isp.name : (info.org || info.isp || 'Không xác định');
+      const asnTxt = info.asn ? `AS${String(info.asn).replace(/\D/g, '')} · ` : '';
+      $('ispRaw').innerText = asnTxt + (info.org || info.isp || '');
+      $('ipAddr').innerText = `IP: ${info.ip || '---'}`;
+    }
+
+    function renderLocation(info) {
+      const city = normalizePlace(info.city, info.region);
+      const country = info.countryCode ? countryName(info.countryCode) : '';
+      $('locationText').innerText = [city, country].filter(Boolean).join(', ') || 'Không xác định';
+      $('locationSrc').innerText = 'Theo địa chỉ IP (có thể lệch)';
+      if (info.colo) {
+        const where = COLO_NAMES[info.colo] ? ` (${COLO_NAMES[info.colo]})` : '';
+        $('serverText').innerText = `Server: Cloudflare ${info.colo}${where}`;
+      } else {
+        $('serverText').innerText = 'Server: Cloudflare';
+      }
+    }
+
+    // --- GPS (tuỳ chọn): chính xác hơn IP, cần người dùng cho phép ---
+    function applyGPS(g) {
+      const place = [g.district, g.city].filter(Boolean).join(', ');
+      const country = g.countryCode ? countryName(g.countryCode.toUpperCase()) : '';
+      $('locationText').innerText = [place, country].filter(Boolean).join(', ');
+      const acc = g.accuracy ? (g.accuracy >= 1000 ? `~${(g.accuracy / 1000).toFixed(1)} km` : `~${Math.round(g.accuracy)} m`) : '';
+      const coords = g.lat != null ? `${g.lat.toFixed(4)}, ${g.lon.toFixed(4)}` : '';
+      $('locationSrc').innerText = 'Theo định vị thiết bị' + (acc ? ` · sai số ${acc}` : '') + (coords ? ` · ${coords}` : '');
+    }
+
+    async function reverseGeocode(lat, lon) {
+      try {   // Nguồn 1: BigDataCloud (không cần key, gọi được từ trình duyệt)
+        const d = await getJSON(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=vi`, 8000);
+        const admin = ((d.localityInfo && d.localityInfo.administrative) || []).map(x => x.name);
+        return { city: normalizePlace(d.city, d.principalSubdivision, ...admin), district: d.locality || '', countryCode: d.countryCode || '' };
+      } catch (e) { /* thử nguồn kế */ }
+      const d = await getJSON(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=14&accept-language=vi&lat=${lat}&lon=${lon}`, 8000);
+      const a = d.address || {};
+      return { city: normalizePlace(a.city, a.state, a.town, a.county, a.province),
+               district: a.city_district || a.suburb || a.district || '', countryCode: a.country_code || '' };
+    }
+
+    async function useGPSLocation() {
+      const btn = $('gpsBtn');
+      if (!navigator.geolocation) { btn.innerText = 'Trình duyệt không hỗ trợ GPS'; return; }
+      btn.innerText = 'Đang lấy vị trí...';
+      navigator.geolocation.getCurrentPosition(async pos => {
+        try {
+          const g = await reverseGeocode(pos.coords.latitude, pos.coords.longitude);
+          g.lat = pos.coords.latitude; g.lon = pos.coords.longitude; g.accuracy = pos.coords.accuracy;
+          sessionStorage.setItem('gpsLocation', JSON.stringify(g));
+          applyGPS(g);
+          btn.innerText = 'Đã cập nhật theo GPS';
+        } catch (e) {
+          btn.innerText = 'Không tra cứu được địa chỉ, thử lại';
+        }
+      }, err => {
+        btn.innerText = err.code === 1 ? 'Bạn đã từ chối quyền vị trí' : 'Không lấy được vị trí, thử lại';
+      }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+    }
+
+    // --- Loại kết nối: chỉ Chrome/Edge trên Android/desktop có thể cung cấp (Safari/Firefox thì không) ---
+    function renderConnectionType() {
+      const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const labels = { wifi: 'Wi-Fi', ethernet: 'Cáp mạng (Ethernet)', cellular: 'Mạng di động', bluetooth: 'Bluetooth', wimax: 'WiMAX', other: 'Khác' };
+      const t = c && labels[c.type];
+      $('mediaType').innerText = t || 'Không xác định';
+      $('linkSpeedEst').innerText = t ? '' : 'Trình duyệt không cho biết là Wi-Fi hay cáp';
+    }
+
+    // =====================================================================
+    //  BIỂU ĐỒ & GAUGE
+    // =====================================================================
+    function initChart() {
+      const ctx = $('speedChart').getContext('2d');
+      speedChart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: [], datasets: [{
+          label: 'Tốc độ (Mbps)', data: [], borderColor: '#20d5ff', borderWidth: 2,
+          backgroundColor: 'rgba(32, 213, 255, 0.2)', fill: true, tension: 0.4, pointRadius: 0
+        }] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { display: false },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6b7099', font: { size: 10 } }, beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    function updateChart(val) {
+      const ds = speedChart.data.datasets[0];
+      if (ds.data.length > 60) { speedChart.data.labels.shift(); ds.data.shift(); }
+      speedChart.data.labels.push('');
+      ds.data.push(val);
+      speedChart.update('none');
+    }
+
+    function resetChart(rgb) {
+      const ds = speedChart.data.datasets[0];
+      ds.borderColor = `rgb(${rgb})`;
+      ds.backgroundColor = `rgba(${rgb}, 0.2)`;
+      speedChart.data.labels = [];
+      ds.data = [];
+      speedChart.update();
+    }
+
+    // Gauge cung 270°. fraction: 0 → 1
+    const GAUGE_ARC = 376.99, GAUGE_CIRC = 502.65;
+    function setGaugeFraction(f) {
+      const len = Math.max(0.01, Math.min(1, f) * GAUGE_ARC);
+      gaugeCircle.setAttribute('stroke-dasharray', `${len} ${GAUGE_CIRC}`);
+    }
+    // Thang log để vừa hiển thị được 5 Mbps lẫn 1 Gbps
+    function setGaugeValue(mbps) {
+      setGaugeFraction(Math.log10(1 + Math.max(0, mbps)) / Math.log10(1 + CFG.gaugeMaxMbps));
+    }
+
+    // =====================================================================
+    //  ĐO PING / JITTER / PACKET LOSS (qua HTTP, trình duyệt không gửi được ICMP)
+    // =====================================================================
+    async function timedRequest() {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), CFG.pingTimeoutMs);
+      const t0 = performance.now();
+      try {
+        const r = await fetch(`${CF}/__down?bytes=0&r=${Math.random()}`, { cache: 'no-store', signal: ctl.signal });
+        await r.arrayBuffer();
+        return performance.now() - t0;
+      } catch (e) { return null; }
+      finally { clearTimeout(timer); }
+    }
+
+    async function measureLatency(onSample) {
+      await timedRequest();             // request đầu tiên dính thời gian bắt tay TLS → bỏ đi
+      const rtts = []; let lost = 0;
+      for (let i = 0; i < CFG.pingCount; i++) {
+        const rtt = await timedRequest();
+        if (rtt === null) lost++; else { rtts.push(rtt); onSample && onSample(rtt); }
+        await sleep(120);
+      }
+      if (!rtts.length) throw new Error('Không kết nối được máy chủ đo (có thể bị chặn bởi mạng/tường lửa/trình chặn quảng cáo).');
+      const sorted = [...rtts].sort((a, b) => a - b);
+      const ping = sorted[Math.floor(sorted.length / 2)];                       // trung vị, ít bị nhiễu
+      let jitter = 0;
+      for (let i = 1; i < rtts.length; i++) jitter += Math.abs(rtts[i] - rtts[i - 1]);
+      jitter = rtts.length > 1 ? jitter / (rtts.length - 1) : 0;                // RFC 3550
+      return { ping, jitter, lossPct: (lost / CFG.pingCount) * 100 };
+    }
+
+    // =====================================================================
+    //  ĐO DOWNLOAD / UPLOAD THẬT (nhiều luồng song song, lấy mẫu mỗi 200 ms)
+    // =====================================================================
+    // Bộ đếm byte dùng chung; sampler tính tốc độ tức thời + tốc độ cuối (bỏ giai đoạn warm-up)
+    function createMeter(durationMs, onSample) {
+      const t0 = performance.now();
+      const m = { bytes: 0, t0, done: false, warmBytes: null, warmT: null, smooth: 0, lastBytes: 0, lastT: t0 };
+      m.timer = setInterval(() => {
+        const now = performance.now();
+        const inst = ((m.bytes - m.lastBytes) * 8) / ((now - m.lastT) / 1000) / 1e6;   // Mbps
+        m.lastBytes = m.bytes; m.lastT = now;
+        m.smooth = m.smooth ? m.smooth * 0.6 + inst * 0.4 : inst;
+        if (m.warmBytes === null && now - t0 >= CFG.warmupMs) { m.warmBytes = m.bytes; m.warmT = now; }
+        onSample(m.smooth, now - t0);
+        if (now - t0 >= durationMs) m.done = true;
+      }, 200);
+      m.finish = () => {
+        clearInterval(m.timer);
+        const now = performance.now();
+        const fromBytes = m.warmBytes ?? 0, fromT = m.warmT ?? t0;
+        const secs = Math.max((now - fromT) / 1000, 0.001);
+        m.finalMbps = ((m.bytes - fromBytes) * 8) / secs / 1e6;
+        return m;
+      };
+      return m;
+    }
+
+    async function measureDownload(onSample) {
+      const ctl = new AbortController();
+      const meter = createMeter(CFG.dlDurationMs, onSample);
+      const worker = async () => {
+        while (!meter.done) {
+          try {
+            const res = await fetch(`${CF}/__down?bytes=${CFG.dlChunkBytes}&r=${Math.random()}`, { cache: 'no-store', signal: ctl.signal });
+            const reader = res.body.getReader();
+            while (!meter.done) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              meter.bytes += value.length;
+            }
+            reader.cancel().catch(() => {});
+          } catch (e) { if (ctl.signal.aborted || meter.done) return; await sleep(300); }
+        }
+      };
+      const workers = Array.from({ length: CFG.dlStreams }, worker);
+      await Promise.race([Promise.all(workers), (async () => { while (!meter.done) await sleep(50); })()]);
+      ctl.abort();
+      meter.finish();
+      if (meter.bytes === 0) throw new Error('Không tải được dữ liệu từ máy chủ đo.');
+      return meter;
+    }
+
+    function makeUploadBlob(bytes) {
+      const buf = new Uint8Array(bytes);
+      for (let i = 0; i < bytes; i += 65536) crypto.getRandomValues(buf.subarray(i, Math.min(i + 65536, bytes)));
+      return new Blob([buf]);
+    }
+
+    async function measureUpload(onSample) {
+      const blob = makeUploadBlob(CFG.ulChunkBytes);
+      const meter = createMeter(CFG.ulDurationMs, onSample);
+      const xhrs = new Set();
+      const worker = async () => {
+        while (!meter.done) {
+          await new Promise(resolve => {
+            const xhr = new XMLHttpRequest(); xhrs.add(xhr);
+            let last = 0;
+            xhr.open('POST', `${CF}/__up?r=${Math.random()}`);
+            xhr.upload.onprogress = e => { meter.bytes += e.loaded - last; last = e.loaded; };
+            xhr.onload = xhr.onerror = xhr.onabort = xhr.ontimeout = () => { xhrs.delete(xhr); resolve(); };
+            xhr.timeout = 15000;
+            xhr.send(blob);
+          });
+        }
+      };
+      const workers = Array.from({ length: CFG.ulStreams }, worker);
+      await Promise.race([Promise.all(workers), (async () => { while (!meter.done) await sleep(50); })()]);
+      xhrs.forEach(x => x.abort());
+      meter.finish();
+      if (meter.bytes === 0) throw new Error('Không gửi được dữ liệu lên máy chủ đo.');
+      return meter;
+    }
+
+    const fmtMB = b => (b / 1e6).toFixed(1) + ' MB';
+    const fmtSpeed = v => v >= 100 ? v.toFixed(0) : v.toFixed(2);
+
+    // =====================================================================
+    //  LUỒNG ĐO CHÍNH
+    // =====================================================================
+    async function startSpeedTest() {
+      if (isTesting) return;
+      isTesting = true;
+
+      document.body.classList.remove('done');
+      document.body.classList.add('running');
+
+      pingValEl.innerText = '--';
+      downloadValEl.innerText = '0.00';
+      uploadValEl.innerText = '0.00';
+      $('jitterVal').innerText = '-- ms';
+      $('lossVal').innerText = 'Mất gói: --';
+      $('lossVal').className = 'tile-unit text-emerald-400';
+      setGaugeFraction(0);
+      resetChart('32, 213, 255');
+
+      try {
+        // --- 1. Ping / Jitter / Loss ---
+        stageLabelEl.innerText = '1/3 ĐO PING & LATENCY';
+        unitLabelEl.innerText = 'ms';
+        gaugeSpeedEl.innerText = '--';
+        chartStatus.innerText = `Đang gửi ${CFG.pingCount} yêu cầu HTTP tới Cloudflare...`;
+
+        const lat = await measureLatency(rtt => {
+          gaugeSpeedEl.innerText = Math.round(rtt);
+          setGaugeFraction(Math.min(rtt / 200, 1));
+        });
+        pingValEl.innerText = Math.round(lat.ping);
+        $('jitterVal').innerText = `${lat.jitter.toFixed(1)} ms`;
+        const lossEl = $('lossVal');
+        lossEl.innerText = `Mất gói: ${lat.lossPct.toFixed(0)}%`;
+        lossEl.className = 'tile-unit ' + (lat.lossPct === 0 ? 'text-emerald-400' : lat.lossPct < 5 ? 'text-amber-400' : 'text-red-400');
+
+        // --- 2. Download ---
+        stageLabelEl.innerText = '2/3 ĐO DOWNLOAD';
+        unitLabelEl.innerText = 'Mbps';
+        gaugeSpeedEl.innerText = '0.00';
+        setGaugeFraction(0);
+        resetChart('32, 213, 255');
+        requestAnimationFrame(() => $('dlActiveBar').classList.add('w-full'));
+        chartStatus.innerText = 'Đang đo tốc độ tải về...';
+
+        let dlMeter;
+        dlMeter = await measureDownload((mbps) => {
+          gaugeSpeedEl.innerText = fmtSpeed(mbps);
+          downloadValEl.innerText = fmtSpeed(mbps);
+          setGaugeValue(mbps);
+          updateChart(mbps);
+        });
+        $('dlActiveBar').classList.remove('w-full');
+        downloadValEl.innerText = fmtSpeed(dlMeter.finalMbps);
+        chartStatus.innerText = `Đã tải ${fmtMB(dlMeter.bytes)}`;
+
+        // --- 3. Upload ---
+        stageLabelEl.innerText = '3/3 ĐO UPLOAD';
+        gaugeSpeedEl.innerText = '0.00';
+        setGaugeFraction(0);
+        resetChart('184, 107, 255');
+        requestAnimationFrame(() => $('ulActiveBar').classList.add('w-full'));
+        chartStatus.innerText = 'Đang đo tốc độ tải lên...';
+
+        const ulMeter = await measureUpload((mbps) => {
+          gaugeSpeedEl.innerText = fmtSpeed(mbps);
+          uploadValEl.innerText = fmtSpeed(mbps);
+          setGaugeValue(mbps);
+          updateChart(mbps);
+        });
+        $('ulActiveBar').classList.remove('w-full');
+        uploadValEl.innerText = fmtSpeed(ulMeter.finalMbps);
+
+        renderPhysical({ dl: dlMeter.finalMbps, ul: ulMeter.finalMbps, ping: lat.ping, jitter: lat.jitter, loss: lat.lossPct });
+
+        // --- Hoàn thành ---
+        stageLabelEl.innerText = 'KẾT QUẢ DOWNLOAD';
+        gaugeSpeedEl.innerText = fmtSpeed(dlMeter.finalMbps);
+        setGaugeValue(dlMeter.finalMbps);
+        chartStatus.innerText = `Đã dùng ${fmtMB(dlMeter.bytes + ulMeter.bytes)} dữ liệu`;
+      } catch (err) {
+        stageLabelEl.innerText = 'ĐO KHÔNG THÀNH CÔNG';
+        gaugeSpeedEl.innerText = '--';
+        setGaugeFraction(0);
+        chartStatus.innerText = err.message || 'Có lỗi xảy ra khi đo.';
+        $('dlActiveBar').classList.remove('w-full');
+        $('ulActiveBar').classList.remove('w-full');
+      } finally {
+        document.body.classList.remove('running');
+        document.body.classList.add('done');
+        isTesting = false;
+      }
+    }
+
+    // =====================================================================
+    //  LIÊN HỆ TẦNG VẬT LÝ: đọc card mạng qua agent Python (psutil) + chẩn đoán
+    // =====================================================================
+    let agentNic = null, lastResult = null;
+
+    async function probeAgent() {
+      try {
+        const d = await getJSON('http://127.0.0.1:8765/nic', 1500);
+        const n = d.active;
+        if (!n) return;
+        agentNic = n;
+        $('nicName').innerText = n.name;
+        $('nicSpeed').innerText = n.speed ? `${n.speed} Mbps` : 'Không xác định';
+        $('nicDuplex').innerText = n.duplex === 'full' ? 'Full duplex' : n.duplex === 'half' ? 'Half duplex' : 'Không xác định';
+        $('nicSrc').innerText = 'Nguồn: psutil.net_if_stats() (agent Python)';
+        $('linkManual').style.display = 'none';
+        reRenderPhysical();
+      } catch (e) { /* không có agent: dùng nhập tay */ }
+    }
+
+    const getLinkSpeed = () => (agentNic && agentNic.speed) || Number($('linkSelect').value) || 0;
+    const chip = (cls, text) => `<span class="${cls}">${text}</span>`;
+    const OK = 'text-emerald-400', WARN = 'text-amber-400', BAD = 'text-red-400';
+
+    function renderPhysical(r) {
+      lastResult = r;
+      const link = getLinkSpeed();
+      const peak = Math.max(r.dl, r.ul);
+      let bit = `${r.dl.toFixed(1)} / ${r.ul.toFixed(1)} Mbps`;
+      if (link) {
+        const util = peak / link;
+        bit += ' ' + chip(util >= 0.7 ? OK : util >= 0.3 ? WARN : BAD, `(${Math.round(util * 100)}% của ${link} Mbps)`);
+      }
+      $('mapBit').innerHTML = bit;
+      $('mapDelay').innerHTML = `${Math.round(r.ping)} ms ` + (r.ping < 30 ? chip(OK, '(thấp)') : r.ping < 80 ? chip(WARN, '(trung bình)') : chip(BAD, '(cao)'));
+      $('mapNoise').innerHTML = `${r.jitter.toFixed(1)} ms / ${r.loss.toFixed(0)}% ` +
+        (r.jitter < 10 && r.loss === 0 ? chip(OK, '(ổn định)') : r.jitter < 30 && r.loss < 2 ? chip(WARN, '(hơi dao động)') : chip(BAD, '(không ổn định)'));
+
+      const notes = [];
+      const similar = Math.abs(r.dl - r.ul) / Math.max(peak, 0.001) < 0.3;
+      if (link && link <= 100)
+        notes.push(`<b class="${BAD}">Liên kết vật lý chỉ ${link} Mbps.</b> Tốc độ tối đa bị chặn ở mức này dù gói cước cao hơn. Nếu card hỗ trợ Gigabit, hãy kiểm tra dây mạng, cổng router, driver.`);
+      else if (link && peak / link < 0.3)
+        notes.push(`Tốc độ đo chỉ đạt ${Math.round(peak / link * 100)}% tốc độ liên kết ${link} Mbps: điểm nghẽn nằm ở ngoài card mạng (router, nhà mạng, đường đi tới máy chủ đo).`);
+      else if (!link && peak < 15 && similar)
+        notes.push(`<b class="${WARN}">Download và upload thấp và gần bằng nhau (~${peak.toFixed(0)} Mbps)</b> là dấu hiệu nghi ngờ liên kết vật lý bị hạ xuống 10 Mbps. Hãy xem Link speed của card mạng rồi nhập vào ô bên trên để xác nhận.`);
+      if (r.jitter >= 30 || r.loss >= 2)
+        notes.push('Jitter/mất gói cao gợi ý đường truyền kém ổn định (dây hỏng, nhiễu, Wi-Fi yếu hoặc nghẽn mạng).');
+      if (r.ping >= 80)
+        notes.push('Ping cao một phần do khoảng cách tới máy chủ đo (độ trễ truyền dẫn tỉ lệ thuận với quãng đường).');
+      if (!notes.length) notes.push(`<span class="${OK}">Không thấy dấu hiệu bất thường ở tầng vật lý.</span>`);
+      $('diagBox').innerHTML = '<p class="text-xs text-slate-500 mb-1">Chẩn đoán gợi ý (dựa trên số đo, không thay thế kiểm tra phần cứng):</p><ul class="list-disc pl-5 space-y-1">' +
+        notes.map(n => `<li>${n}</li>`).join('') + '</ul>';
+    }
+    const reRenderPhysical = () => { if (lastResult) renderPhysical(lastResult); };
+
+    function initGaugeTicks() {
+      const g = $('gaugeTicks'); if (!g) return;
+      [[0,'0'],[5,'5'],[10,'10'],[50,'50'],[100,'100'],[250,'250'],[500,'500'],[1000,'1G']].forEach(([v, label]) => {
+        const f = Math.log10(1 + v) / Math.log10(1 + CFG.gaugeMaxMbps);
+        const ang = (135 + f * 270) * Math.PI / 180, r = 96;
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        t.setAttribute('x', (100 + r * Math.cos(ang)).toFixed(1));
+        t.setAttribute('y', (100 + r * Math.sin(ang)).toFixed(1));
+        t.textContent = label; g.appendChild(t);
+      });
+    }
+
+    // =====================================================================
+    //  KHỞI TẠO
+    // =====================================================================
+    window.addEventListener('load', () => {
+      initChart();
+      initGaugeTicks();
+      probeAgent();
+      renderConnectionType();
+      const c = navigator.connection;
+      if (c && c.addEventListener) c.addEventListener('change', renderConnectionType);
+      fetchNetworkDetails();
+    });
+  </script>
+</body>
+</html>
