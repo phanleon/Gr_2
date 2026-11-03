@@ -1,0 +1,15 @@
+{
+  "name": "auto-lesson-auto-save-v3",
+  "version": "4.0.0",
+  "description": "Full-auto lesson downloader: ordered filenames, auto-next, auto-download remaining lessons for authorized non-protected HLS.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "ffmpeg-static": "latest"
+  },
+  "devDependencies": {
+    "electron": "latest"
+  }
+}
