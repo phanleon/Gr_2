@@ -29,13 +29,18 @@
 
 ### 🌸 Khám phá Auto Lesson Downloader V4 🌸
 
-[![Watch Video](https://img.shields.io/badge/▶_WATCH_VIDEO-FF8EBB?style=for-the-badge&logo=googlechrome&logoColor=white)](./demo/video-demo.mp4)
-
-**📺 Video giới thiệu và trình diễn dự án**
-
-<sub>Made with ♡ · Auto Lesson Downloader V4</sub>
+*Trình diễn các tính năng tự động tải bài học*
 
 </div>
+
+DÁN_URL_VIDEO_GITHUB_ATTACHMENT_Ở_ĐÂY
+
+<div align="center">
+
+<sub>♡ Auto Lesson Downloader V4 · Happy Learning! ♡</sub>
+
+</div>
+
 
 ## 🌷 01. Mục tiêu
 
