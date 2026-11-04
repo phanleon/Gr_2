@@ -1,7 +1,7 @@
 🚀 Gr_2 — Ứng dụng Desktop Electron Học Tập & Tương Tác
 Ứng dụng bài học tương tác trên nền tảng Electron JS — Tích hợp sẵn bộ công cụ tự động hóa cài đặt & vận hành 1-Click đỉnh cao!
 
-📖 Hướng Dẫn Tải • ⚡ Khởi Chạy 1-Click • 🛠️ Kiến Trúc Module • ⭐ Kêu Gọi Star
+📖 Hướng Dẫn Tải • ⚡ Khởi Chạy 1-Click • 🛠️ Kiến Trúc Module
 
 📑 Mục Lục Quick-Nav
 📌 Giới Thiệu Dự Án
@@ -11,13 +11,10 @@
 🚀 Hướng Dẫn Sử Dụng Chi Tiết
 🛠️ Cấu Trúc Thư Mục & Kiến Trúc Dự Án
 ❓ Xử Lý Sự Cố Thường Gặp (Troubleshooting)
-⭐ Chiến Lược Bứt Phá 1,000 Stars
 📌 Giới Thiệu Dự Án
-Gr_2 là ứng dụng Desktop chuyên biệt phát triển bởi (nhánh LeonBrank), xây dựng trên nền tảng Electron JS hiện đại [1].
+Gr_2 là ứng dụng Desktop chuyên biệt phát triển bởi tác giả phanleon (nhánh LeonBrank), xây dựng trên nền tảng Electron JS hiện đại [1].
 
 Ứng dụng giúp giải quyết triệt để rào cản kỹ thuật cho người dùng phổ thông nhờ hệ thống script tự động hóa 1-Click, giúp bạn không cần biết gõ câu lệnh vẫn có thể trải nghiệm các bài học tương tác phong phú một cách nhanh chóng và an toàn nhất [1].
-
-💡 Điểm khác biệt: Thay vì phải cài đặt thủ công qua Terminal phức tạp, Gr_2 cung cấp sẵn INSTALL_AND_RUN.bat giúp tự động tải phụ thuộc và kích hoạt ứng dụng chỉ bằng một cú nhấp chuột [1].
 
 ✨ Tính Năng Nổi Bật
 Tính Năng	Mô Tả Chi Tiết	Lợi Ích
