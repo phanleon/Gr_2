@@ -23,6 +23,20 @@
 
 </div>
 
+## 🎬 Video giới thiệu dự án
+
+<div align="center">
+
+### 🌸 Khám phá Auto Lesson Downloader V4 🌸
+
+[![Watch Video](https://img.shields.io/badge/▶_WATCH_VIDEO-FF8EBB?style=for-the-badge&logo=googlechrome&logoColor=white)](./demo/video-demo.mp4)
+
+**📺 Video giới thiệu và trình diễn dự án**
+
+<sub>Made with ♡ · Auto Lesson Downloader V4</sub>
+
+</div>
+
 ## 🌷 01. Mục tiêu
 
 Bạn không cần tải từng bài học một.
