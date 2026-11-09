@@ -2,9 +2,17 @@
 node_modules/
 */node_modules/
 
-# Temporary and database WAL files
+# Environment secrets and private keys
+.env
+.env.*
+!.env.example
+
+# Local SQLite databases & backups (prevent leaking real user data)
+*.db
+*.db-journal
 *.db-wal
 *.db-shm
+workspace.db
 backups/
 uploads/
 *.log
