@@ -1,82 +1,104 @@
-
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FFB7D5,25:CDB4FF,50:A0C4FF,75:9BF6D0,100:FDFFB6&height=230&section=header&text=Auto%20Lesson%20Downloader&fontSize=36&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=V4%20%E2%80%94%20FULL%20AUTO%20%E2%9C%A8&descSize=20&descAlignY=58" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF6B6B,25:FF8E53,50:FFA07A,75:C56CF0,100:6C5CE7&height=260&section=header&text=Auto%20Lesson%20Downloader&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=V4%20%E2%80%94%20SMART%20FULL-AUTO%20EDITION%20%E2%9C%A8&descSize=20&descAlignY=62" width="100%" />
 
 ### ૮꒰ ˶• ༝ •˶꒱ა ♡
-
-**Trợ lý tải bài học tự động — Chỉ một cú nhấn, mọi thứ được xử lý!**
-
-<br/>
-
-<img src="https://img.shields.io/badge/🌸_VERSION-V4-FF8EBB?style=for-the-badge" />
-<img src="https://img.shields.io/badge/🪟_PLATFORM-WINDOWS-A0C4FF?style=for-the-badge" />
-<img src="https://img.shields.io/badge/⚙️_RUNTIME-NODE.JS-9BE7B1?style=for-the-badge" />
-<img src="https://img.shields.io/badge/🎬_STREAM-HLS%20%2F%20M3U8-CDB4FF?style=for-the-badge" />
-<img src="https://img.shields.io/badge/💗_MODE-FULL%20AUTO-FFB7D5?style=for-the-badge" />
+### ⚡ Intelligent, Fully Automated HLS/M3U8 Lesson Video Downloader
+*Trợ lý tải toàn bộ khóa học tự động — Chỉ 1 cú click chuột, tự động chuyển bài & tải đến bài cuối cùng!*
 
 <br/>
 
-*✧ Mở bài học · Bấm một nút · Để V4 lo phần còn lại! ✧*
+[![GitHub Stars](https://img.shields.io/github/stars/phanleon/Gr_2?style=for-the-badge&logo=github&color=FFD700&logoColor=white)](https://github.com/phanleon/Gr_2/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/phanleon/Gr_2?style=for-the-badge&logo=github&color=6C5CE7&logoColor=white)](https://github.com/phanleon/Gr_2/network/members)
+[![Version](https://img.shields.io/badge/Release-V4.0.0_Full_Auto-FF7675?style=for-the-badge&logo=electron)](https://github.com/phanleon/Gr_2)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11-0984E3?style=for-the-badge&logo=windows)](https://github.com/phanleon/Gr_2)
+[![Runtime](https://img.shields.io/badge/Runtime-Node.js%20%7C%20Electron-00B894?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![Engine](https://img.shields.io/badge/Engine-FFmpeg_Static-E17055?style=for-the-badge&logo=ffmpeg)](https://ffmpeg.org/)
+[![License](https://img.shields.io/badge/License-MIT-FDCB6E?style=for-the-badge)](LICENSE)
 
-`🌸` ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ `🌸`
+<br/>
+
+<a href="https://git.io/typing-svg">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3000&pause=1000&color=6C5CE7&center=true&vCenter=true&width=620&lines=One-Click+Full+Auto+Lesson+Archiving;Auto-Detect+HLS+%2F+M3U8+Streams;Smart+Auto-Next+Button+Clicker;Intelligent+Title-Based+File+Ordering;Skip+Downloaded+Lessons+from+History;Built+for+Windows+%26+Mac+with+Electron" alt="Typing SVG" />
+</a>
+
+<br/>
+
+> 🌟 **Nếu bạn thấy dự án hữu ích, hãy tặng 1 Star ⭐ ở góc phải trên để ủng hộ nhóm phát triển nhé!** 🌟
+
+`🌸` ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ `🌸`
 
 </div>
 
+## 📌 Mục lục
 
+- [🌟 Giới thiệu tổng quan](#-giới-thiệu-tổng-quan)
+- [✨ Tính năng vượt trội (Key Features)](#-tính-năng-vượt-trội-key-features)
+- [🔄 Sơ đồ luồng hoạt động (Workflow)](#-sơ-đồ-luồng-hoạt-động-workflow)
+- [🚀 Hướng dẫn cài đặt & Chạy siêu tốc](#-hướng-dẫn-cài-đặt--chạy-siêu-tốc)
+- [🎯 Quy trình sử dụng 4 bước](#-quy-trình-sử-dụng-4-bước)
+- [⚙️ Tùy biến cấu hình nút "Bài sau"](#-tùy-biến-cấu-hình-nút-bài-sau)
+- [📂 Cấu trúc dự án (Architecture)](#-cấu-trúc-dự-án-architecture)
+- [⚠️ Lưu ý & Bản quyền](#-lưu-ý--bản-quyền)
+- [💖 Đóng góp & Star History](#-đóng-góp--star-history)
 
+---
 
+## 🌟 Giới thiệu tổng quan
 
+**Auto Lesson Downloader V4** là ứng dụng desktop hiện đại chạy trên nền tảng **Electron**, được thiết kế để giải quyết bài toán tải các khóa học trực tuyến nhiều bài học mà không cần phải canh chừng và bấm tải thủ công từng bài một.
 
-## 🌷 01. Mục tiêu
+Chỉ cần đăng nhập vào trang học tập, mở bài học đầu tiên và bấm **`FULL AUTO TỪ BÀI HIỆN TẠI`**:
+- Ứng dụng sẽ tự động **bắt luồng stream HLS / M3U8**.
+- Tải về và ghép chuẩn xác cả video lẫn audio thành file **MP4**.
+- Tự động tìm và click nút **Bài sau** (Next lesson).
+- Đợi bài mới nạp xong và tự động lặp lại quy trình cho đến bài học cuối cùng của khóa học!
 
-Bạn không cần tải từng bài học một.
+---
 
-Chỉ cần thực hiện 4 bước:
+## ✨ Tính năng vượt trội (Key Features)
 
-<table>
-<tr>
-<td align="center">🌐</td>
-<td><b>Mở website</b><br/>Truy cập trang học tập.</td>
-</tr>
-<tr>
-<td align="center">🔐</td>
-<td><b>Đăng nhập</b><br/>Sử dụng tài khoản của bạn.</td>
-</tr>
-<tr>
-<td align="center">📚</td>
-<td><b>Chọn bài học</b><br/>Mở bài muốn bắt đầu tải.</td>
-</tr>
-<tr>
-<td align="center">💗</td>
-<td><b>Bấm FULL AUTO TỪ BÀI HIỆN TẠI</b><br/>Để ứng dụng tự động xử lý.</td>
-</tr>
-</table>
+| Icon | Tính năng | Chi tiết |
+|:---:|:---|:---|
+| ⚡ | **Full-Auto Pipeline** | Tự động hóa 100%: Tải bài hiện tại ➔ Tìm nút chuyển bài ➔ Chuyển sang bài kế ➔ Chờ tải ➔ Lặp lại. |
+| 🎬 | **Auto-Sniff Stream HLS/M3U8** | Cơ chế bắt gói tin mạng thông minh, nhận diện chính xác playlist video và audio của bài học. |
+| 📦 | **Ghép MP4 Chuẩn Bằng FFmpeg** | Tích hợp sẵn `ffmpeg-static`, xuất video độ phân giải cao kèm âm thanh đầy đủ. |
+| 🔢 | **Tự Động Đặt Tên & Đánh Số Thứ Tự** | Phân tích tiêu đề (ví dụ: *"Bài 4: Luyện nghe"*) ➔ Tự sinh file `004_Bài 4 - Luyện nghe.mp4`. |
+| 💾 | **Lưu Lịch Sử & Chống Tải Lặp** | Tự ghi nhận vào `history.json`. Bỏ qua các bài đã tải thành công nếu file vẫn tồn tại. |
+| 🛡️ | **Chống Kẹt Vòng Lặp Vô Tận** | Tự nhận diện URL và tiêu đề trùng lặp để ngăn việc chuyển vòng lặp sang bài cũ. |
+| 🎛️ | **Tùy Chỉnh CSS Selector Linh Hoạt** | Dễ dàng thay đổi `Next text` hoặc `Next selector` để tương thích với mọi nền tảng website học tập. |
+| 🚀 | **Chạy 1 Click (Zero Setup)** | Kèm sẵn file `INSTALL_AND_RUN.bat` cho Windows: Tự kiểm tra, tự cài đặt và tự khởi chạy! |
 
-> ૮₍ ˶ᵔ ᵕ ᵔ˶ ₎ა Sau đó V4 sẽ tự động tải bài hiện tại, chuyển bài và tiếp tục tải các bài tiếp theo!
+---
 
-## 🐾 02. V4 hoạt động như thế nào?
+## 🔄 Sơ đồ luồng hoạt động (Workflow)
 
 ```mermaid
 flowchart TD
-    A(["🌐 Mở website & đăng nhập"]):::pink
-    B(["📚 Mở bài học hiện tại"]):::blue
-    C(["🔍 Phát hiện HLS / M3U8"]):::purple
-    D{"💾 Bài đã tải chưa?"}:::yellow
-    E(["🎬 Tải video + audio"]):::mint
-    F(["📦 Lưu thành MP4"]):::blue
-    G(["👉 Tìm và bấm Bài sau"]):::pink
-    H{"🌸 Còn bài tiếp theo?"}:::yellow
-    I(["⏳ Chờ video bài mới"]):::purple
-    J(["🏆 Hoàn tất Full Auto"]):::mint
-    K(["⏭️ Bỏ qua bài đã tải"]):::gray
+    Start(["🚀 Mở ứng dụng & Đăng nhập website"]):::pink
+    OpenLesson(["📚 Mở bài học muốn bắt đầu"]):::blue
+    ClickAuto(["💖 Bấm FULL AUTO TỪ BÀI HIỆN TẠI"]):::pink
+    
+    Detect{"🔍 Bắt được luồng HLS / M3U8?"}:::yellow
+    WaitStream["⏳ Chờ người dùng bấm Play video"]:::gray
+    
+    CheckHistory{"💾 Bài đã có trong history.json?"}:::yellow
+    DownloadVid["🎬 FFmpeg tải Video + Audio và ghép MP4"]:::mint
+    SaveHistory["📝 Ghi nhận tên file & URL vào history.json"]:::blue
+    SkipVid["⏭️ Bỏ qua bài đã tải"]:::gray
+    
+    FindNext{"👉 Có nút 'Bài sau' phù hợp?"}:::yellow
+    ClickNext["🖱️ Tự động click nút 'Bài sau'"]:::pink
+    WaitLoad["⏳ Đợi trang mới & video mới sẵn sàng"]:::blue
+    Finish(["🏆 Hoàn tất toàn bộ khóa học!"]):::mint
 
-    A --> B --> C --> D
-    D -- Chưa --> E --> F --> G
-    D -- Đã tải --> K --> G
-    G --> H
-    H -- Có --> I --> C
-    H -- Không --> J
+    Start --> OpenLesson --> ClickAuto --> Detect
+    Detect -- Chưa có --> WaitStream --> Detect
+    Detect -- Đã bắt được --> CheckHistory
+    CheckHistory -- Chưa tải --> DownloadVid --> SaveHistory --> FindNext
+    CheckHistory -- Đã có sẵn --> SkipVid --> FindNext
+    FindNext -- Tìm thấy --> ClickNext --> WaitLoad --> Detect
+    FindNext -- Hết bài --> Finish
 
     classDef pink fill:#FFE0EF,stroke:#FF80B5,color:#8A3159,stroke-width:2px
     classDef purple fill:#E9DDFF,stroke:#B69AFF,color:#563C91,stroke-width:2px
@@ -86,161 +108,123 @@ flowchart TD
     classDef gray fill:#EEEEF4,stroke:#AAAABD,color:#55556B,stroke-width:2px
 ```
 
-## ✨ 03. Tính năng nổi bật
+---
 
-| 🎀 Tính năng | 💬 Mô tả |
-|:--|:--|
-| 🎬 Phát hiện stream | Tự phát hiện HLS/M3U8 của bài học hiện tại. |
-| 🎧 Video + Audio | Tải các thành phần video và audio của stream. |
-| 📦 Xuất MP4 | Lưu video thành file MP4. |
-| 🐰 Auto Next | Tự tìm và nhấn nút Bài sau. |
-| ⏳ Auto Wait | Chờ video bài mới xuất hiện. |
-| 🔁 Full Auto | Lặp đến khi không còn nút Bài sau phù hợp. |
-| 🔢 Auto Rename | Tự đánh số và đặt tên file theo tiêu đề. |
-| 💾 Download History | Ghi nhớ các bài đã tải thành công. |
-| ⏭️ Smart Skip | Bỏ qua bài đã tải nếu file vẫn tồn tại. |
+## 🚀 Hướng dẫn cài đặt & Chạy siêu tốc
 
-## 🌈 04. Rename thứ tự tự động
-
-V4 ưu tiên lấy số bài trực tiếp từ tiêu đề.
-
-**Ví dụ tiêu đề:**
-
-```text
-Bài 4: Cấu trúc câu đơn
-```
-
-**Tên file được tạo:**
-
-```text
-004_Bài 4 - Cấu trúc câu đơn.mp4
-```
-
-Nếu tiêu đề không có số bài, V4 sử dụng số thứ tự của phiên Full Auto:
-
-```text
-001_...
-002_...
-003_...
-```
-
-Bạn cũng có thể chọn:
-
-`Số thứ tự bắt đầu`
-
-để tùy chỉnh số thứ tự cho phiên tải.
-
-## 💾 05. Bỏ qua bài đã tải
-
-V4 lưu lịch sử tại:
-
-```text
-Downloads\AutoLessonAutoSave\history.json
-```
-
-Một bài sẽ được bỏ qua khi:
-
-- Bài đó đã được ghi nhận tải thành công.
-- File tương ứng vẫn tồn tại trên máy tính.
-
-Nhờ vậy, khi chạy Full Auto lần nữa, ứng dụng không cần tải lại những bài đã hoàn tất và còn file.
-
-## 👉 06. Cấu hình nút Bài sau
-
-Mặc định:
-
-<img src="https://img.shields.io/badge/NEXT%20TEXT-B%C3%A0i%20sau-FF8EBB?style=for-the-badge" />
-
-V4 tìm kiếm các phần tử giao diện phổ biến:
-
-```css
-button
-a
-[role="button"]
-input[type="button"]
-input[type="submit"]
-```
-
-Nếu website có selector riêng, bạn có thể nhập vào `Next selector`.
-
-| ⚙️ Cấu hình | 📝 Chức năng |
-|:--|:--|
-| `Next text` | Nội dung chữ để tìm nút chuyển bài. Mặc định: Bài sau. |
-| `Next selector` | CSS selector riêng của nút chuyển bài. |
-| `Số thứ tự bắt đầu` | Số bắt đầu khi đánh tên file theo thứ tự phiên tải. |
-
-## 🚀 07. Cài đặt và chạy
-
-### 🩷 Bước 1 — Cài Node.js
-
-Cài đặt **Node.js LTS** trên Windows.
-
-<img src="https://img.shields.io/badge/Node.js-LTS-9BE7B1?style=flat-square&logo=nodedotjs&logoColor=white" />
-
-### 💜 Bước 2 — Cài thư viện
-
-Mở PowerShell tại thư mục dự án:
-
-```powershell
-npm install
-```
-
-### 💙 Bước 3 — Khởi động ứng dụng
-
-```powershell
-npm start
-```
-
-Hoặc chạy file:
-
-```text
-INSTALL_AND_RUN.bat
-```
-
-### 💚 Bước 4 — Bắt đầu tải
-
-1. Mở website học tập.
-2. Đăng nhập tài khoản.
-3. Chọn bài học muốn bắt đầu.
-4. Nhấn **FULL AUTO TỪ BÀI HIỆN TẠI**.
-
-`૮꒰ ˶• ༝ •˶꒱ა` Chúc bạn tải bài thành công!
-
-## 📁 08. Cấu trúc thư mục lưu
-
-```text
-Downloads/
-└── AutoLessonAutoSave/
-    ├── 001_....mp4
-    ├── 002_....mp4
-    ├── 003_....mp4
-    └── history.json
-```
-
-## 🎧 09. Về âm thanh
-
-Player trên website có thể đang ở trạng thái mute hoặc pause.
-
-Tuy nhiên, file tải trực tiếp vẫn có audio nếu playlist HLS có chứa luồng âm thanh tương ứng.
-
-## ⚠️ 10. Giới hạn và lưu ý
-
-- V4 không lấy khóa, không phá DRM và không vượt protected media.
-- Nếu playlist có `#EXT-X-KEY` với phương thức khác `NONE`, ứng dụng sẽ không cố lấy khóa để tải nội dung được bảo vệ.
-- Nếu website dùng iframe hoặc cơ chế chuyển bài đặc biệt, selector `Bài sau` có thể cần chỉnh.
-- Khả năng tải audio phụ thuộc vào cấu trúc playlist HLS của website.
-- Chỉ sử dụng ứng dụng với nội dung bạn có quyền truy cập và tải xuống; hãy tuân thủ điều khoản website và quy định bản quyền.
+### Yêu cầu tiên quyết:
+- Máy tính chạy **Windows 10 / 11** (hoặc macOS / Linux).
+- Đã cài đặt **[Node.js (Bản LTS)](https://nodejs.org/)** (Khuyên dùng v18 hoặc v20+).
 
 ---
 
+### Cách 1: Khởi động 1 Click trên Windows (Dễ nhất ⭐)
+
+1. Tải dự án về máy: Bấm nút **Code > Download ZIP** trên GitHub rồi giải nén (hoặc `git clone https://github.com/phanleon/Gr_2.git`).
+2. Nhấp đúp chuột vào file:
+   ```text
+   INSTALL_AND_RUN.bat
+   ```
+   *File này sẽ tự kiểm tra môi trường, tự cài đặt các thư viện cần thiết và khởi chạy ứng dụng!*
+3. Những lần mở sau, bạn chỉ cần bấm file:
+   ```text
+   RUN.bat
+   ```
+
+---
+
+### Cách 2: Khởi động qua dòng lệnh (Terminal / PowerShell)
+
+```bash
+# 1. Clone mã nguồn về máy
+git clone https://github.com/phanleon/Gr_2.git
+cd Gr_2
+
+# 2. Cài đặt các gói phụ thuộc
+npm install
+
+# 3. Khởi chạy ứng dụng
+npm start
+```
+
+---
+
+## 🎯 Quy trình sử dụng 4 bước
+
+```text
+  [1. Vào trang web]  ──▶  [2. Đăng nhập]  ──▶  [3. Chọn bài đầu]  ──▶  [4. Bấm FULL AUTO]
+```
+
+1. **Bước 1 — Mở Website:** Nhập URL trang web bài giảng của bạn vào thanh địa chỉ của cửa sổ trình duyệt bên trong ứng dụng.
+2. **Bước 2 — Đăng nhập:** Đăng nhập tài khoản học viên chính thức của bạn.
+3. **Bước 3 — Mở bài học:** Nhấp vào bài học bạn muốn bắt đầu tải. Bấm Play video một vài giây để app phát hiện luồng phát.
+4. **Bước 4 — Bấm Bắt Đầu:** Trên thanh điều khiển, nhấn nút màu hồng **`FULL AUTO TỪ BÀI HIỆN TẠI`**.
+   - Thư giãn và để ứng dụng tự động tải tất cả các bài còn lại vào thư mục:
+   ```text
+   Downloads/AutoLessonAutoSave/
+   ```
+
+---
+
+## ⚙️ Tùy biến cấu hình nút "Bài sau"
+
+Nếu trang web của bạn sử dụng nút chuyển bài với từ ngữ khác hoặc selector riêng, bạn có thể dễ dàng điều chỉnh tại thanh cấu hình:
+
+| Mục cấu hình | Giá trị mặc định | Giải thích chi tiết |
+|:---|:---:|:---|
+| **Next text** | `Bài sau` | Đoạn chữ hiển thị trên nút chuyển bài (ví dụ: `Bài tiếp theo`, `Next`, `Tiếp tục`...). |
+| **Next selector** | *(Để trống)* | CSS Selector nâng cao nếu nút nằm trong thẻ đặc biệt (ví dụ: `.btn-next-lesson` hoặc `#next-step`). |
+| **Số thứ tự bắt đầu** | `1` | Số đánh dấu bắt đầu cho phiên tải nếu tiêu đề bài học không chứa số tự nhiên. |
+
+---
+
+## 📂 Cấu trúc dự án (Architecture)
+
+```text
+Gr_2/
+├── demo/                       # Thư mục chứa video / hình ảnh minh họa
+├── renderer/                   # Giao diện người dùng (Frontend UI)
+│   ├── index.html              # Trang điều khiển chính (Control Panel)
+│   ├── renderer.js             # Logic điều khiển, lắng nghe IPC & xử lý sự kiện
+│   └── style.css               # Giao diện hiện đại, thẩm mỹ cao
+├── INSTALL_AND_RUN.bat         # Script cài đặt & chạy tự động 1 click cho Windows
+├── RUN.bat                     # Script chạy nhanh khi đã cài đặt thư viện
+├── lesson_preload.js           # Script can thiệp an toàn vào trang bài học để tìm nút Next
+├── main.js                     # Electron Main Process (Bắt luồng HLS, tải FFmpeg, quản lý cửa sổ)
+├── package.json                # Khai báo phiên bản và phụ thuộc dự án
+├── package-lock.json           # Khóa phiên bản chính xác của dependencies
+├── preload.js                  # Cầu nối IPC contextBridge bảo mật giữa Main và Renderer
+├── STATUS.txt                  # Ghi chú tiến độ & lịch sử phát triển
+├── README.md                   # Tài liệu hướng dẫn chính thức (Tiếng Anh & Tiếng Việt)
+└── .gitignore                  # Cấu hình bỏ qua các file tạm, node_modules và log
+```
+
+---
+
+## ⚠️ Lưu ý & Bản quyền
+
+- Ứng dụng hoạt động dựa trên luồng phát trực tiếp (HLS/M3U8) không mã hóa bảo vệ (Non-DRM).
+- Không hỗ trợ bẻ khóa hoặc phá vỡ các biện pháp bảo vệ bản quyền số (Widevine, PlayReady, DRM có khóa `#EXT-X-KEY`).
+- Người dùng chịu hoàn toàn trách nhiệm về việc sử dụng ứng dụng đối với tài khoản và nội dung mà mình có quyền truy cập hợp pháp vì mục đích học tập cá nhân.
+
+---
+
+## 💖 Đóng góp & Star History
+
+Mọi đóng góp, báo lỗi (Issue) hoặc Pull Request đều được hoan nghênh nồng nhiệt!
+
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FFB7D5,30:CDB4FF,60:A0C4FF,100:9BF6D0&height=150&section=footer&animation=fadeIn" width="100%" />
+[![Star History Chart](https://api.star-history.com/svg?repos=phanleon/Gr_2&type=Date)](https://star-history.com/#phanleon/Gr_2&Date)
 
-### 🌸 Thanks for using Auto Lesson Downloader V4! 🌸
+<br/>
 
-**Made with ♡ and a little bit of magic**
+### 🌸 Cảm ơn bạn đã ghé thăm Auto Lesson Downloader! 🌸
 
-`૮꒰ ˶• ༝ •˶꒱ა` · `Happy Learning!` · `✨`
+**Đừng quên bấm ⭐ Star phía trên để lưu lại dự án nhé!**
+
+`૮꒰ ˶• ༝ •˶꒱ა` · `Thank you & Happy coding!` · `✨`
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C5CE7,30:A0C4FF,60:CDB4FF,100:FFB7D5&height=140&section=footer&animation=fadeIn" width="100%" />
 
 </div>
