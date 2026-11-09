@@ -61,15 +61,18 @@ Xem video trực quan giải thích chi tiết **Cách Internet & Mạng LAN v�
 
 ### 📺 Video: Cách Internet / LAN Vận Hành & Thiết Lập Đường Hầm SSH Zero-Trust
 
-https://github.com/phanleon/Gr_2/raw/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4
+<a href="https://github.com/phanleon/Gr_2/blob/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4" title="Bấm vào để xem video chất lượng cao có âm thanh">
+  <img src="docs/videos/demo.gif" alt="Video Demo Nguyên Lý Đường Hầm SSH" width="380" style="border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
+</a>
+
+<br/>
+<br/>
+
+[![Xem Video Full HD Trực Tiếp](https://img.shields.io/badge/▶_BẤM_XEM_VIDEO_FULL_HD_CÓ_TIẾNG_TRÊN_TRÌNH_DUYỆT-00CEC9?style=for-the-badge&logo=github&logoColor=white)](https://github.com/phanleon/Gr_2/blob/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4)
 
 <br/>
 
-[![Xem Video Demo](https://img.shields.io/badge/▶_BẤM_VÀO_ĐÂY_ĐỂ_XEM_VIDEO_FULL_HD-00CEC9?style=for-the-badge&logo=youtube&logoColor=white)](https://github.com/phanleon/Gr_2/raw/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4)
-
-<br/>
-
-> 💡 *Nếu trình duyệt không tự động phát video trực tiếp ở trên, bạn có thể bấm vào nút phía trên hoặc mở file [**`docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4`**](docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4) để xem chất lượng cao trực tiếp trên GitHub.*
+> 💡 *Video đang tự động phát minh họa trực tiếp ở trên! Bạn chỉ cần **bấm vào khung hình hoặc nút bấm phía trên** để thưởng thức toàn bộ video Full HD kèm âm thanh gốc trên trình phát của GitHub mà không cần tải file về máy.*
 
 </div>
 
