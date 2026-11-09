@@ -107,7 +107,7 @@ flowchart TD
         LocalPty["⚡ Local PTY Shell Bridge"]
     end
 
-    subgraph TunnelCloud ["☁️ Dynamic Tunnel & Discovery ($0)"]
+    subgraph TunnelCloud ["☁️ Dynamic Tunnel & Discovery (Chi phí 0đ)"]
         CFTunnel["🌐 Cloudflare Outbound Quick Tunnel"]
         GistRegistry["📡 GitHub Gist Discovery Registry"]
     end
@@ -121,23 +121,28 @@ flowchart TD
     end
 
     ClientApp -->|"1. Đọc Endpoint active"| GistRegistry
-    ServerApp -->|"Tạo Tunnel & Publish Endpoint"| CFTunnel
+    ServerApp -->|"2. Tạo Tunnel & Publish Endpoint"| CFTunnel
     CFTunnel -->|"Cập nhật URL tự động"| GistRegistry
-    ClientApp <==|"Kết nối mã hóa WSS/WebRTC"| ServerApp
+    ClientApp <-->|"Kết nối mã hóa WSS/WebRTC"| ServerApp
 
     ClientApp -.->|"Stream màn hình"| ScreenCap
-    ScreenCap ==>|"WebRTC Video Track"| ServerApp
-    ServerApp ==>|"Koffi Win32 Mouse/Key Injection"| ClientApp
+    ScreenCap -->|"WebRTC Video Track"| ServerApp
+    ServerApp -->|"Koffi Win32 Mouse/Key Injection"| ClientApp
 
     LocalPty <-->|"Kênh lệnh Shell"| CmdFirewall
-    CmdFirewall -- "Lệnh an toàn" --> AuditDB
-    CmdFirewall -- "Lệnh nguy hiểm" -->|"CHẶN & Báo động Đỏ"| ServerApp
+    CmdFirewall -->|"Lệnh an toàn"| AuditDB
+    CmdFirewall -->|"Lệnh nguy hiểm: CHẶN & Báo động Đỏ"| ServerApp
     AuditDB -.->|"Phân tích nhật ký bất thường"| OllamaAI
 
-    classDef blue fill:#DCEEFF,stroke:#85BAFF,color:#285C91,stroke-width:2px
-    classDef mint fill:#D9FBE8,stroke:#7ED9AC,color:#236B49,stroke-width:2px
-    classDef pink fill:#FFE0EF,stroke:#FF80B5,color:#8A3159,stroke-width:2px
-    classDef yellow fill:#FFF5CC,stroke:#F3CE65,color:#85631B,stroke-width:2px
+    classDef blue fill:#DCEEFF,stroke:#85BAFF,color:#285C91,stroke-width:2px;
+    classDef mint fill:#D9FBE8,stroke:#7ED9AC,color:#236B49,stroke-width:2px;
+    classDef pink fill:#FFE0EF,stroke:#FF80B5,color:#8A3159,stroke-width:2px;
+    classDef yellow fill:#FFF5CC,stroke:#F3CE65,color:#85631B,stroke-width:2px;
+
+    class ClientApp,ScreenCap,LocalPty mint;
+    class CFTunnel,GistRegistry yellow;
+    class ServerApp,AuthRBAC,AuditDB blue;
+    class CmdFirewall,OllamaAI pink;
 ```
 
 ---
