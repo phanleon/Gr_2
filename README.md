@@ -32,15 +32,44 @@
 
 ## 📌 Mục lục
 
+- [🎬 Video hướng dẫn & Demo thực tế](#-video-hướng-dẫn--demo-thực-tế)
 - [🌟 Giới thiệu tổng quan](#-giới-thiệu-tổng-quan)
 - [✨ Tính năng vượt trội (Key Features)](#-tính-năng-vượt-trội-key-features)
 - [🔄 Sơ đồ luồng hoạt động (Workflow)](#-sơ-đồ-luồng-hoạt-động-workflow)
-- [🚀 Hướng dẫn cài đặt & Chạy siêu tốc](#-hướng-dẫn-cài-đặt--chạy-siêu-tốc)
+- [🚀 Hướng dẫn cách chạy chi tiết nhất (How to Run)](#-hướng-dẫn-cách-chạy-chi-tiết-nhất-how-to-run)
 - [🎯 Quy trình sử dụng 4 bước](#-quy-trình-sử-dụng-4-bước)
 - [⚙️ Tùy biến cấu hình nút "Bài sau"](#-tùy-biến-cấu-hình-nút-bài-sau)
 - [📂 Cấu trúc dự án (Architecture)](#-cấu-trúc-dự-án-architecture)
+- [🛠️ Xử lý sự cố thường gặp (Troubleshooting)](#️-xử-lý-sự-cố-thường-gặp-troubleshooting)
 - [⚠️ Lưu ý & Bản quyền](#-lưu-ý--bản-quyền)
 - [💖 Đóng góp & Star History](#-đóng-góp--star-history)
+
+---
+
+## 🎬 Video hướng dẫn & Demo thực tế
+
+Xem video demo trực quan để nắm bắt toàn bộ cách thức hoạt động của ứng dụng từ lúc mở phần mềm cho đến khi tải tự động hoàn tất:
+
+<div align="center">
+
+### 🌸 Video Walkthrough: Giải mã dự án Auto Lesson Downloader V4 🌸
+
+<br/>
+
+[![Watch Demo Video](https://img.shields.io/badge/▶_BẤM_VÀO_ĐÂY_ĐỂ_XEM_VIDEO_DEMO_HD-FF6B6B?style=for-the-badge&logo=youtube&logoColor=white)](demo/Giải_mã_dự_án_Gr_2.mp4)
+
+<br/>
+
+> 💡 *Bạn có thể nhấp trực tiếp vào liên kết trên hoặc truy cập thư mục [**`demo/Giải_mã_dự_án_Gr_2.mp4`**](demo/Giải_mã_dự_án_Gr_2.mp4) trong kho lưu trữ để xem hoặc tải video chất lượng cao về máy.*
+
+</div>
+
+#### ⏱️ Các mốc thời gian nổi bật trong video (Timestamps):
+- **`00:00` — Mở ứng dụng 1-Click:** Nhấp đúp vào file `INSTALL_AND_RUN.bat` khởi động môi trường siêu tốc.
+- **`00:45` — Truy cập & Đăng nhập:** Đăng nhập vào trang web bài giảng và chọn bài học bắt đầu.
+- **`01:30` — Kích hoạt FULL AUTO:** Bấm nút Full Auto, hệ thống tự động nhận diện luồng stream HLS `.m3u8`.
+- **`02:15` — Cơ chế Auto-Next thông minh:** Tải xong bài ➔ Tự tìm nút "Bài sau" ➔ Tự chuyển trang ➔ Tải bài kế tiếp.
+- **`03:20` — Kết quả tải về:** Video xuất chuẩn MP4 độ nét cao, tự đánh số thứ tự gọn gàng trong thư mục Downloads.
 
 ---
 
@@ -110,40 +139,47 @@ flowchart TD
 
 ---
 
-## 🚀 Hướng dẫn cài đặt & Chạy siêu tốc
+## 🚀 Hướng dẫn cách chạy chi tiết nhất (How to Run)
 
-### Yêu cầu tiên quyết:
-- Máy tính chạy **Windows 10 / 11** (hoặc macOS / Linux).
-- Đã cài đặt **[Node.js (Bản LTS)](https://nodejs.org/)** (Khuyên dùng v18 hoặc v20+).
+### Yêu cầu trước khi chạy:
+* Máy tính đã cài đặt **[Node.js LTS (Khuyên dùng bản 18 hoặc 20+)](https://nodejs.org/)**. *(Nếu chưa có, bạn vào trang web tải về và nhấn Next liên tục để cài đặt trong 1 phút).*
 
 ---
 
-### Cách 1: Khởi động 1 Click trên Windows (Dễ nhất ⭐)
+### 🌟 Cách 1: Khởi động 1-Click trên Windows (Khuyên dùng - Dành cho mọi người)
 
-1. Tải dự án về máy: Bấm nút **Code > Download ZIP** trên GitHub rồi giải nén (hoặc `git clone https://github.com/phanleon/Gr_2.git`).
-2. Nhấp đúp chuột vào file:
+Dự án đã tích hợp sẵn các file script thông minh, bạn không cần phải gõ bất kỳ dòng lệnh nào:
+
+1. **Bước 1:** Tải mã nguồn về máy:
+   - Bấm nút xanh lá **Code > Download ZIP** ở góc trên GitHub, sau đó giải nén ra thư mục.
+2. **Bước 2 (Chỉ cần làm lần đầu):** Nhấp đúp chuột vào file:
    ```text
    INSTALL_AND_RUN.bat
    ```
-   *File này sẽ tự kiểm tra môi trường, tự cài đặt các thư viện cần thiết và khởi chạy ứng dụng!*
-3. Những lần mở sau, bạn chỉ cần bấm file:
+   *File này sẽ tự động kiểm tra Node.js, tự tải các thư viện cần thiết (Electron, FFmpeg) và khởi động ứng dụng ngay sau khi tải xong.*
+3. **Bước 3 (Các lần sau):** Bạn chỉ cần nhấp đúp vào:
    ```text
    RUN.bat
    ```
+   *Ứng dụng sẽ mở lên ngay lập tức trong 2 giây!*
 
 ---
 
-### Cách 2: Khởi động qua dòng lệnh (Terminal / PowerShell)
+### 💻 Cách 2: Khởi động qua dòng lệnh (Terminal / PowerShell / CMD)
+
+Dành cho các bạn lập trình viên hoặc người quen dùng terminal:
 
 ```bash
-# 1. Clone mã nguồn về máy
+# 1. Clone mã nguồn về máy tính
 git clone https://github.com/phanleon/Gr_2.git
+
+# 2. Di chuyển vào thư mục dự án
 cd Gr_2
 
-# 2. Cài đặt các gói phụ thuộc
+# 3. Cài đặt các thư viện phụ thuộc
 npm install
 
-# 3. Khởi chạy ứng dụng
+# 4. Khởi chạy ứng dụng
 npm start
 ```
 
@@ -182,7 +218,8 @@ Nếu trang web của bạn sử dụng nút chuyển bài với từ ngữ khá
 
 ```text
 Gr_2/
-├── demo/                       # Thư mục chứa video / hình ảnh minh họa
+├── demo/                       # Video hướng dẫn & hình ảnh minh họa thực tế
+│   └── Giải_mã_dự_án_Gr_2.mp4 # Video MP4 HD demo toàn bộ tính năng ứng dụng
 ├── renderer/                   # Giao diện người dùng (Frontend UI)
 │   ├── index.html              # Trang điều khiển chính (Control Panel)
 │   ├── renderer.js             # Logic điều khiển, lắng nghe IPC & xử lý sự kiện
@@ -198,6 +235,17 @@ Gr_2/
 ├── README.md                   # Tài liệu hướng dẫn chính thức (Tiếng Anh & Tiếng Việt)
 └── .gitignore                  # Cấu hình bỏ qua các file tạm, node_modules và log
 ```
+
+---
+
+## 🛠️ Xử lý sự cố thường gặp (Troubleshooting)
+
+| Vấn đề | Nguyên nhân | Cách khắc phục |
+|:---|:---|:---|
+| `[LOI] Khong tim thay Node.js` | Máy tính chưa cài đặt Node.js. | Tải và cài đặt bản Node.js LTS từ [nodejs.org](https://nodejs.org/) rồi chạy lại file `.bat`. |
+| `npm install` bị treo / chậm | Kết nối mạng quốc tế chập chờn khi tải Electron. | Đổi sang mạng ổn định hơn hoặc chạy lệnh `npm install --registry=https://registry.npmmirror.com`. |
+| Không bắt được video stream | Video chưa bắt đầu phát trên trình duyệt. | Nhấn Play video trên website khoảng 2 - 3 giây để luồng HLS `.m3u8` xuất hiện. |
+| Không tự bấm chuyển bài sau | Nút chuyển bài của website dùng từ ngữ khác. | Điền từ hiển thị trên nút vào ô `Next text` (ví dụ: `Tiếp theo`, `Next lesson`). |
 
 ---
 
