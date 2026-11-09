@@ -31,6 +31,7 @@
 ## 📌 Mục lục
 
 - [🌟 Giới thiệu tổng quan](#-giới-thiệu-tổng-quan)
+- [🎬 Video Demo & Nguyên Lý Vận Hành](#-video-demo--nguyên-lý-vận-hành)
 - [✨ Các tính năng nổi bật (Standout Features)](#-các-tính-năng-nổi-bật-standout-features)
 - [🔄 Sơ đồ kiến trúc bảo mật (Architecture)](#-sơ-đồ-kiến-trúc-bảo-mật-architecture)
 - [🚀 Hướng dẫn cài đặt & Chạy siêu tốc (Quick Start)](#-hướng-dẫn-cài-đặt--chạy-siêu-tốc-quick-start)
@@ -49,6 +50,33 @@
 1. **Kiến trúc Zero-Trust:** Không ai được tin cậy mặc định. Mỗi phòng ban đều có cơ chế khóa kép (Dual-Lock): mật khẩu phòng + sự phê duyệt trực tiếp của Trưởng phòng hoặc Quản trị viên.
 2. **Tường lửa lệnh SSH (Command Firewall):** Tự động phát hiện và chặn đứng tức thì các câu lệnh phá hoại hệ thống (`rm -rf`, `format`, `Remove-Item -Force`) trước khi chúng được thực thi trên máy nhân viên.
 3. **Điều khiển máy từ xa chuyên nghiệp:** Chia sẻ màn hình thời gian thực độ trễ thấp và can thiệp chuột/bàn phím gốc Windows qua thư viện FFI `user32.dll`.
+
+---
+
+## 🎬 Video Demo & Nguyên Lý Vận Hành
+
+Xem video trực quan giải thích chi tiết **Cách Internet & Mạng LAN vận hành qua Đường hầm SSH Bảo Mật**:
+
+<div align="center">
+
+### 📺 Video: Cách Internet / LAN Vận Hành & Thiết Lập Đường Hầm SSH Zero-Trust
+
+https://github.com/phanleon/Gr_2/raw/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4
+
+<br/>
+
+[![Xem Video Demo](https://img.shields.io/badge/▶_BẤM_VÀO_ĐÂY_ĐỂ_XEM_VIDEO_FULL_HD-00CEC9?style=for-the-badge&logo=youtube&logoColor=white)](https://github.com/phanleon/Gr_2/raw/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4)
+
+<br/>
+
+> 💡 *Nếu trình duyệt không tự động phát video trực tiếp ở trên, bạn có thể bấm vào nút phía trên hoặc mở file [**`docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4`**](docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4) để xem chất lượng cao trực tiếp trên GitHub.*
+
+</div>
+
+#### 📌 Nội dung then chốt được giải mã trong video:
+1. **Bản chất mạng Internet & CGNAT/Firewall:** Tại sao hai máy tính khác mạng (ở nhà và công ty) bình thường không thể kết nối trực tiếp nếu không mở cổng modem router.
+2. **Nguyên lý Đường Hầm SSH Zero-Trust (Reverse Tunneling):** Cơ chế máy trạm chủ động tạo kết nối ra ngoài (Outbound Connection) an toàn, vượt qua mọi lớp tường lửa và NAT mà không cần can thiệp router.
+3. **Mã hóa điểm cuối & Kiểm toán lệnh:** Gói tin được bảo vệ toàn vẹn, kết hợp tường lửa chặn các câu lệnh phá hoại trước khi chạm tới hệ điều hành.
 
 ---
 
@@ -184,6 +212,9 @@ Gr_2/
 │   └── server/                        # Express API, Socket.io & SQLite DB
 ├── dist-release/                      # Chứa file thực thi Portable đóng gói
 │   └── SecureWorkspace_Portable.exe   # Bản Portable 1-Click Launch
+├── docs/                              # Tài liệu & Media
+│   └── videos/                        # Video hướng dẫn & giải thích cơ chế
+│       └── Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4
 ├── electron/                          # Mã nguồn TypeScript cho Electron
 │   ├── main.ts                        # Electron Main selector (Server/Client mode)
 │   └── services/                      # Watchdog, Win32 Remote Control, SSH PTY
@@ -202,7 +233,6 @@ Gr_2/
 ├── package.json                       # Khai báo phụ thuộc dự án
 ├── tsconfig.electron.json             # Cấu hình TypeScript cho Electron
 ├── vite.config.ts                     # Cấu hình đóng gói Vite React
-├── ANTIGRAVITY_SPEC.md                # Tài liệu đặc tả kỹ thuật chi tiết
 └── README.md                          # Tài liệu hướng dẫn chính thức
 ```
 
