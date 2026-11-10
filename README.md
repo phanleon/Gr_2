@@ -3,7 +3,7 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0984E3,25:6C5CE7,50:A29BFE,75:00CEC9,100:00B894&height=270&section=header&text=Secure%20Remote%20Workspace&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=ZERO-TRUST%20SSH%20%E2%80%A2%20ULTRAVIEWER%20DESKTOP%20%E2%80%A2%20AI%20COPILOT%20%E2%9C%A8&descSize=19&descAlignY=62" width="100%" />
 
 ### 🛡️ Enterprise Zero-Trust Remote Workspace & Audited Desktop System
-*Hệ thống Không gian làm việc từ xa chuẩn Zero-Trust: Điều khiển Desktop kiểu UltraViewer, Terminal SSH bảo mật có Firewall chặn lệnh nguy hiểm, mạng P2P tự phục hồi $0 chi phí.*
+*High-performance remote management suite featuring UltraViewer-style low-latency desktop control, audited web-based SSH terminal with an active Command Firewall, and self-healing P2P cross-network discovery with $0 infrastructure cost.*
 
 <br/>
 
@@ -22,97 +22,97 @@
 
 <br/>
 
-> 🌟 **Nếu bạn thấy dự án hữu ích, hãy bấm tặng 1 Star ⭐ ở góc trên bên phải để ủng hộ nhóm phát triển nhé!** 🌟
+> 🌟 **If you find this project valuable, please give it a Star ⭐ in the top right corner to support open-source development!** 🌟
 
 `🛡️` ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ `🛡️`
 
 </div>
 
-## 📌 Mục lục
+## 📌 Table of Contents
 
-- [🌟 Giới thiệu tổng quan](#-giới-thiệu-tổng-quan)
-- [🎬 Video Demo & Nguyên Lý Vận Hành](#-video-demo--nguyên-lý-vận-hành)
-- [✨ Các tính năng nổi bật (Standout Features)](#-các-tính-năng-nổi-bật-standout-features)
-- [🔄 Sơ đồ kiến trúc bảo mật (Architecture)](#-sơ-đồ-kiến-trúc-bảo-mật-architecture)
-- [🚀 Hướng dẫn cài đặt & Chạy siêu tốc (Quick Start)](#-hướng-dẫn-cài-đặt--chạy-siêu-tốc-quick-start)
-- [🔐 Tài khoản thử nghiệm mặc định](#-tài-khoản-thử-nghiệm-mặc-định)
-- [📂 Cấu trúc mã nguồn dự án](#-cấu-trúc-mã-nguồn-dự-án)
-- [🤖 Tích hợp Trí tuệ nhân tạo (Local AI Copilot)](#-tích-hợp-trí-tuệ-nhân-tạo-local-ai-copilot)
-- [💖 Đóng góp & Star History](#-đóng-góp--star-history)
-
----
-
-## 🌟 Giới thiệu tổng quan
-
-**Secure Remote Workspace** là bộ giải pháp máy tính để bàn (Desktop Application) toàn diện xây dựng trên nền tảng **Electron + React + Express + SQLite + TypeScript**, cho phép kết nối an toàn giữa các máy tính cá nhân qua các mạng Internet khác nhau (Wi-Fi công cộng, 4G/5G, CGNAT) mà **hoàn toàn không cần mở port modem / router (Zero Router Config)** với chi phí hạ tầng **0đ**.
-
-### Điểm khác biệt cốt lõi:
-1. **Kiến trúc Zero-Trust:** Không ai được tin cậy mặc định. Mỗi phòng ban đều có cơ chế khóa kép (Dual-Lock): mật khẩu phòng + sự phê duyệt trực tiếp của Trưởng phòng hoặc Quản trị viên.
-2. **Tường lửa lệnh SSH (Command Firewall):** Tự động phát hiện và chặn đứng tức thì các câu lệnh phá hoại hệ thống (`rm -rf`, `format`, `Remove-Item -Force`) trước khi chúng được thực thi trên máy nhân viên.
-3. **Điều khiển máy từ xa chuyên nghiệp:** Chia sẻ màn hình thời gian thực độ trễ thấp và can thiệp chuột/bàn phím gốc Windows qua thư viện FFI `user32.dll`.
+- [🌟 Overview](#-overview)
+- [🎬 Video Demo & Operational Mechanics](#-video-demo--operational-mechanics)
+- [✨ Key Features](#-key-features)
+- [🔄 Security Architecture](#-security-architecture)
+- [🚀 Quick Start Guide](#-quick-start-guide)
+- [🔐 Default Credentials](#-default-credentials)
+- [📂 Project Structure](#-project-structure)
+- [🤖 Local AI Copilot Integration](#-local-ai-copilot-integration)
+- [💖 Contributing & Star History](#-contributing--star-history)
 
 ---
 
-## 🎬 Video Demo & Nguyên Lý Vận Hành
+## 🌟 Overview
 
-Xem video trực quan giải thích chi tiết **Cách Internet & Mạng LAN vận hành qua Đường hầm SSH Bảo Mật**:
+**Secure Remote Workspace** is a unified desktop enterprise solution built on **Electron, React 18, Express, SQLite (WAL mode), and TypeScript**. It enables seamless and secure cross-network collaboration across isolated endpoints (home Wi-Fi, public hotspots, mobile 4G/5G, and enterprise CGNAT networks) with **Zero Router Configuration (No port forwarding needed)** and **$0 server infrastructure costs**.
+
+### Core Pillars:
+1. **Zero-Trust Security Model:** Never trust, always verify. Every department room enforces Dual-Lock verification: room password authentication combined with mandatory Room Owner or Administrator authorization.
+2. **Proactive Command Firewall:** Inspects incoming shell streams in real-time, instantly blocking destructive commands (`rm -rf`, `format`, `Remove-Item -Force`, `reg delete`) before execution on client workstations.
+3. **Native Desktop Remote Control:** Ultra-low-latency WebRTC desktop streaming coupled with native Win32 `user32.dll` input injection via high-performance FFI (`koffi`), featuring an emergency **`F12`** panic cutoff switch.
+
+---
+
+## 🎬 Video Demo & Operational Mechanics
+
+Watch the visual demonstration explaining **How Cross-Network Internet & LAN Routing Operates via Secure Reverse SSH Tunneling**:
 
 <div align="center">
 
-### 📺 Video: Cách Internet / LAN Vận Hành & Thiết Lập Đường Hầm SSH Zero-Trust
+### 📺 Video: Cross-Network Routing & Zero-Trust Reverse SSH Tunneling
 
-<a href="https://github.com/phanleon/Gr_2/blob/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4" title="Bấm vào để xem video chất lượng cao có âm thanh">
-  <img src="docs/videos/demo.gif" alt="Video Demo Nguyên Lý Đường Hầm SSH" width="380" style="border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
+<a href="https://github.com/phanleon/Gr_2/blob/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4" title="Click to watch full high-definition video with audio on GitHub">
+  <img src="docs/videos/demo.gif" alt="Zero-Trust Reverse SSH Tunneling Demo" width="380" style="border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
 </a>
 
 <br/>
 <br/>
 
-[![Xem Video Full HD Trực Tiếp](https://img.shields.io/badge/▶_BẤM_XEM_VIDEO_FULL_HD_CÓ_TIẾNG_TRÊN_TRÌNH_DUYỆT-00CEC9?style=for-the-badge&logo=github&logoColor=white)](https://github.com/phanleon/Gr_2/blob/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4)
+[![Watch Full HD Video with Audio](https://img.shields.io/badge/▶_WATCH_FULL_HD_VIDEO_ON_GITHUB-00CEC9?style=for-the-badge&logo=github&logoColor=white)](https://github.com/phanleon/Gr_2/blob/main/docs/videos/Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4)
 
 <br/>
 
-> 💡 *Video đang tự động phát minh họa trực tiếp ở trên! Bạn chỉ cần **bấm vào khung hình hoặc nút bấm phía trên** để thưởng thức toàn bộ video Full HD kèm âm thanh gốc trên trình phát của GitHub mà không cần tải file về máy.*
+> 💡 *The animated demonstration plays automatically above! Click on the animation or the badge above to watch the complete Full HD video with audio directly in GitHub's web player without downloading.*
 
 </div>
 
-#### 📌 Nội dung then chốt được giải mã trong video:
-1. **Bản chất mạng Internet & CGNAT/Firewall:** Tại sao hai máy tính khác mạng (ở nhà và công ty) bình thường không thể kết nối trực tiếp nếu không mở cổng modem router.
-2. **Nguyên lý Đường Hầm SSH Zero-Trust (Reverse Tunneling):** Cơ chế máy trạm chủ động tạo kết nối ra ngoài (Outbound Connection) an toàn, vượt qua mọi lớp tường lửa và NAT mà không cần can thiệp router.
-3. **Mã hóa điểm cuối & Kiểm toán lệnh:** Gói tin được bảo vệ toàn vẹn, kết hợp tường lửa chặn các câu lệnh phá hoại trước khi chạm tới hệ điều hành.
+#### 📌 Core Mechanics Covered in the Video:
+1. **NAT, CGNAT & Firewall Traversal:** Why devices located on disparate private local networks cannot establish direct incoming connections without open router ports.
+2. **Zero-Trust Reverse Tunneling:** The client initiates an encrypted outbound connection to an intermediary tunnel gateway, bypassing all restrictive NAT and firewall policies cleanly.
+3. **End-to-End Encryption & Keystroke Auditing:** Full packet protection with comprehensive audit trails, paired with an active firewall neutralizing malicious commands before hitting the kernel.
 
 ---
 
-## ✨ Các tính năng nổi bật (Standout Features)
+## ✨ Key Features
 
-| Icon | Tính năng | Mô tả chi tiết |
+| Icon | Feature | Technical Details |
 |:---:|:---|:---|
-| 🌐 | **Zero-Config Discovery ($0)** | Sử dụng Quick Tunnel (`*.trycloudflare.com`) tự động phát hiện đổi IP / đổi Wi-Fi để cập nhật điểm nối qua GitHub Gist Registry. Tự động phục hồi kết nối trong 5 giây. |
-| 🖥️ | **UltraViewer Remote Desktop** | Chia sẻ màn hình WebRTC (kèm fallback JPEG qua WebSocket). Bơm sự kiện chuột/bàn phím chính xác từng pixel qua `koffi` (`user32.dll`). Phím nóng ngắt khẩn cấp **`F12`**. |
-| 🛡️ | **Zero-Trust WebTerminal & SSH** | Tích hợp console `xterm.js` cho phép IT mở shell điều khiển máy trạm từ xa **không cần mở Port 22**. Ghi nhật ký từng phím gõ vào hệ thống kiểm toán Server. |
-| 🛑 | **Dangerous Command Firewall** | Chặn đứng tức thì các mã độc hại (`del /f /s /q`, `Remove-Item C:\`, `reg delete`...) và phát cảnh báo mức `CRITICAL` lên bảng điều khiển Server. |
-| 🏢 | **Không gian làm việc phòng ban** | Tường mạng xã hội doanh nghiệp phân quyền theo phòng (IT, Kế toán, Marketing...). Phòng ban nào chỉ xem được kế hoạch và dữ liệu của phòng ban đó. |
-| 📦 | **Truyền file phân mảnh 10MB** | Cơ chế tự động cắt nhỏ file lớn thành từng khối 10MB để vượt qua giới hạn dung lượng miễn phí của Cloudflare và ráp lại an toàn với mã hash SHA-256. |
-| 🤖 | **Local AI Copilot (Ollama)** | Trợ lý AI cục bộ tự động tóm tắt biên bản họp, tóm tắt kế hoạch dự án và chuyển đổi câu lệnh tự nhiên thành mã lệnh PowerShell/Bash (`#ai <yêu cầu>`). |
+| 🌐 | **Zero-Config Discovery ($0)** | Outbound Cloudflare Quick Tunnels (`*.trycloudflare.com`) synchronized with GitHub Gist discovery registry. Dynamic reconnection and self-healing within 5 seconds upon IP/Wi-Fi transitions. |
+| 🖥️ | **UltraViewer-Style Desktop** | Real-time WebRTC desktop screen sharing with JPEG fallback over WebSocket. Sub-millisecond mouse and keyboard event injection powered by `koffi` (`user32.dll`). Emergency kill-switch on **`F12`**. |
+| 🛡️ | **Zero-Trust WebTerminal & SSH** | Integrated `xterm.js` terminal allowing authorized administrators to execute remote shell diagnostics **without exposing Port 22**. Every keystroke is logged directly into the Server audit store. |
+| 🛑 | **Dangerous Command Firewall** | Real-time heuristic parsing that neutralizes destructive patterns (`del /f /s /q`, `Remove-Item C:\`, `reg delete`, `mkfs`) and broadcasts immediate `CRITICAL` alarms to the Server dashboard. |
+| 🏢 | **Department Room Isolation** | Role-Based Access Control (RBAC) departmental hubs (IT, Finance, Marketing, Operations). Strictly segregated feeds, vaults, and task workflows accessible only to authenticated personnel. |
+| 📦 | **10MB Chunked File Transfer** | Automatic file chunking into 10MB fragments to comply with free tunnel payload thresholds, reassembled at the destination with SHA-256 cryptographic verification. |
+| 🤖 | **On-Premise AI Copilot (Ollama)** | Native local LLM connectivity for automated meeting recaps, project task generation, and natural language command synthesis (`#ai <prompt>` translated to valid PowerShell/Bash). |
 
 ---
 
-## 🔄 Sơ đồ kiến trúc bảo mật (Architecture)
+## 🔄 Security Architecture
 
 ```mermaid
 flowchart TD
-    subgraph ClientZone ["🏢 Máy trạm Nhân viên (Client Edition)"]
+    subgraph ClientZone ["🏢 Employee Workstation (Client Edition)"]
         ClientApp["💻 Client_Workspace.exe"]
         ScreenCap["📹 Desktop Capturer & Screen Stream"]
         LocalPty["⚡ Local PTY Shell Bridge"]
     end
 
-    subgraph TunnelCloud ["☁️ Dynamic Tunnel & Discovery (Chi phí 0đ)"]
+    subgraph TunnelCloud ["☁️ Dynamic Tunnel & Discovery ($0 Cost)"]
         CFTunnel["🌐 Cloudflare Outbound Quick Tunnel"]
         GistRegistry["📡 GitHub Gist Discovery Registry"]
     end
 
-    subgraph ServerZone ["🛡️ Máy chủ Quản trị (Server Edition)"]
+    subgraph ServerZone ["🛡️ Management Server (Server Edition)"]
         ServerApp["🖥️ Server_Admin.exe"]
         AuthRBAC["🔑 3-Tier RBAC & Dual-Lock Guard"]
         CmdFirewall{"🛑 Dangerous Command Firewall"}
@@ -120,19 +120,19 @@ flowchart TD
         OllamaAI["🤖 Local AI Ollama Guard"]
     end
 
-    ClientApp -->|"1. Đọc Endpoint active"| GistRegistry
-    ServerApp -->|"2. Tạo Tunnel & Publish Endpoint"| CFTunnel
-    CFTunnel -->|"Cập nhật URL tự động"| GistRegistry
-    ClientApp <-->|"Kết nối mã hóa WSS/WebRTC"| ServerApp
+    ClientApp -->|"1. Fetch active endpoint"| GistRegistry
+    ServerApp -->|"2. Spawn Tunnel & publish endpoint"| CFTunnel
+    CFTunnel -->|"Auto-sync public URL"| GistRegistry
+    ClientApp <-->|"Encrypted WSS/WebRTC connection"| ServerApp
 
-    ClientApp -.->|"Stream màn hình"| ScreenCap
+    ClientApp -.->|"Desktop stream"| ScreenCap
     ScreenCap -->|"WebRTC Video Track"| ServerApp
     ServerApp -->|"Koffi Win32 Mouse/Key Injection"| ClientApp
 
-    LocalPty <-->|"Kênh lệnh Shell"| CmdFirewall
-    CmdFirewall -->|"Lệnh an toàn"| AuditDB
-    CmdFirewall -->|"Lệnh nguy hiểm: CHẶN & Báo động Đỏ"| ServerApp
-    AuditDB -.->|"Phân tích nhật ký bất thường"| OllamaAI
+    LocalPty <-->|"Shell execution pipe"| CmdFirewall
+    CmdFirewall -->|"Safe commands"| AuditDB
+    CmdFirewall -->|"Destructive commands: BLOCK & ALERT"| ServerApp
+    AuditDB -.->|"Anomaly pattern inspection"| OllamaAI
 
     classDef blue fill:#DCEEFF,stroke:#85BAFF,color:#285C91,stroke-width:2px;
     classDef mint fill:#D9FBE8,stroke:#7ED9AC,color:#236B49,stroke-width:2px;
@@ -147,117 +147,118 @@ flowchart TD
 
 ---
 
-## 🚀 Hướng dẫn cài đặt & Chạy siêu tốc (Quick Start)
+## 🚀 Quick Start Guide
 
-### Yêu cầu môi trường:
-- Hệ điều hành: **Windows 10 / 11** (Hỗ trợ cả Linux).
-- Đã cài đặt **[Node.js (Bản LTS)](https://nodejs.org/)** (v18 hoặc v20+).
+### Prerequisites:
+- Operating System: **Windows 10 / 11** (Linux supported).
+- Runtime: **[Node.js (LTS Version)](https://nodejs.org/)** (v18 or v20+ recommended).
 
 ---
 
-### Cách 1: Khởi động 1-Click trên Windows (Khuyên dùng ⭐)
+### Method 1: 1-Click Launch on Windows (Recommended ⭐)
 
-1. Tải toàn bộ mã nguồn về máy: Nhấn **Code > Download ZIP** trên GitHub rồi giải nén.
-2. Cài đặt và mở app lần đầu bằng cách nhấp đúp:
+1. Download the repository source: Click **Code > Download ZIP** on GitHub and extract the folder.
+2. Initialize and start the application automatically by double-clicking:
    ```text
    INSTALL_AND_RUN.bat
    ```
-   *File này tự kiểm tra môi trường, tự chạy `npm install` và mở ứng dụng.*
-3. Để chạy các chế độ riêng biệt:
-   * **Chạy giao diện Máy Chủ:** Mở file `RUN_SERVER.bat` (hoặc `npm run electron:server`).
-   * **Chạy giao diện Máy Nhân Viên:** Mở file `RUN_CLIENT.bat` (hoặc `npm run electron:client`).
+   *This automated script checks prerequisites, runs `npm install`, and opens the workspace.*
+3. Launch specific editions independently:
+   * **Start Server Administration Edition:** Double-click `RUN_SERVER.bat` (or run `npm run electron:server`).
+   * **Start Client Workstation Edition:** Double-click `RUN_CLIENT.bat` (or run `npm run electron:client`).
 
 ---
 
-### Cách 2: Chạy qua dòng lệnh Terminal
+### Method 2: Launch via Terminal
 
 ```bash
-# 1. Clone repository
+# 1. Clone the repository
 git clone https://github.com/phanleon/Gr_2.git
 cd Gr_2
 
-# 2. Cài đặt các thư viện cần thiết
+# 2. Install all required dependencies
 npm install
 
-# 3. Chạy giao diện Web phát triển (Vite)
+# 3. Start the Vite React development server
 npm run dev
 
-# 4. Khởi chạy Electron đồng thời cả Máy Chủ & Máy Trạm
+# 4. Launch both Server & Client instances concurrently
 npm run dev:both:electron
 ```
 
 ---
 
-### Cách 3: Sử dụng bản Portable đóng gói sẵn (Không cần cài Node.js)
-Trong thư mục `dist-release/`:
-* [**`dist-release/SecureWorkspace_Portable.exe`**](dist-release/SecureWorkspace_Portable.exe) (~103 MB) — Chỉ cần nhấp đúp là phần mềm khởi chạy ngay lập tức!
+### Method 3: Standalone Portable Binary (No Node.js Required)
+Located under the `dist-release/` directory:
+* [**`dist-release/SecureWorkspace_Portable.exe`**](dist-release/SecureWorkspace_Portable.exe) (~103 MB) — Double-click to execute immediately without installing dependencies!
 
 ---
 
-## 🔐 Tài khoản thử nghiệm mặc định
+## 🔐 Default Credentials
 
-Hệ thống được khởi tạo sẵn tài khoản Quản trị cấp cao nhất:
+The system initializes with a root administrative account:
 
-| Vai trò | Tên đăng nhập | Mật khẩu mặc định | Quyền hạn |
+| Role | Username | Default Password | Privileges |
 |:---|:---:|:---:|:---|
-| **SERVER_ADMIN (Root)** | `admin` | `Server@123456` | Toàn quyền tạo phòng, cấp phép nhân viên, xem toàn bộ log kiểm toán và điều khiển máy từ xa. |
-| **ROOM_OWNER** | *Tạo từ Dashboard* | *Tùy chọn* | Quản lý thành viên phòng ban, duyệt người vào phòng, kick, tắt tiếng (mute) mic. |
-| **CLIENT** | *Tạo từ Dashboard* | *Tùy chọn* | Tham gia phòng được cấp phép, nhắn tin, gọi video, chia sẻ màn hình. |
+| **SERVER_ADMIN (Root)** | `admin` | `Server@123456` | Full administrative control: room provisioning, access approvals, audit log inspection, and remote desktop takeover. |
+| **ROOM_OWNER** | *Created via Dashboard* | *Configurable* | Department room administration: member access approval, kick, and audio moderation. |
+| **CLIENT** | *Created via Dashboard* | *Configurable* | Workstation user: room participation, messaging, WebRTC calling, and authorized screen sharing. |
 
 ---
 
-## 📂 Cấu trúc mã nguồn dự án
+## 📂 Project Structure
 
 ```text
 Gr_2/
-├── dist/                              # Bản build giao diện HTML/CSS/JS đã biên dịch
+├── dist/                              # Compiled production HTML/CSS/JS assets
 │   ├── assets/
-│   │   ├── index-BNDu8XHC.js          # JavaScript bundle chính
-│   │   └── index-BwycqhT4.css         # CSS Tailwind bundle
-│   └── index.html                     # Entry point UI
-├── dist-electron/                     # Bản build backend & electron main
-│   ├── electron/                      # Main process & Native FFI Windows Bridge
+│   │   ├── index-BNDu8XHC.js          # Core frontend bundle
+│   │   └── index-BwycqhT4.css         # Tailwind styles bundle
+│   └── index.html                     # Frontend entrypoint
+├── dist-electron/                     # Transpiled backend & Electron main processes
+│   ├── electron/                      # Main process & native Win32 FFI bridges
 │   └── server/                        # Express API, Socket.io & SQLite DB
-├── dist-release/                      # Chứa file thực thi Portable đóng gói
-│   └── SecureWorkspace_Portable.exe   # Bản Portable 1-Click Launch
-├── docs/                              # Tài liệu & Media
-│   └── videos/                        # Video hướng dẫn & giải thích cơ chế
-│       └── Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4
-├── electron/                          # Mã nguồn TypeScript cho Electron
-│   ├── main.ts                        # Electron Main selector (Server/Client mode)
-│   └── services/                      # Watchdog, Win32 Remote Control, SSH PTY
-├── server/                            # Mã nguồn TypeScript cho Backend
-│   ├── controllers/                   # Xử lý Logic phòng ban, người dùng, upload
-│   ├── db/                            # SQLite Schema & Database DAO
-│   ├── middleware/                    # Tường lửa JWT, Audit Log
-│   └── sockets/                       # Signaling WebRTC, Chat, SSH Terminal Socket
-├── src/                               # Giao diện người dùng React 18
-│   ├── components/                    # Dashboard, Lobby, Vault, Whiteboard, Feed
-│   ├── context/                       # Quản lý Socket & Auth State
-│   └── main.tsx                       # React mount point
-├── INSTALL_AND_RUN.bat                # 1-Click cài đặt và chạy tự động
-├── RUN_SERVER.bat                     # 1-Click mở Server Edition
-├── RUN_CLIENT.bat                     # 1-Click mở Client Edition
-├── package.json                       # Khai báo phụ thuộc dự án
-├── tsconfig.electron.json             # Cấu hình TypeScript cho Electron
-├── vite.config.ts                     # Cấu hình đóng gói Vite React
-└── README.md                          # Tài liệu hướng dẫn chính thức
+├── dist-release/                      # Packaged standalone distribution binaries
+│   └── SecureWorkspace_Portable.exe   # Portable 1-Click executable
+├── docs/                              # Project documentation & media assets
+│   └── videos/                        # Architecture explainer videos & animations
+│       ├── Cach_InternetLAN_Van_Hanh_Duong_Ham_SSH.mp4
+│       └── demo.gif
+├── electron/                          # Electron source code in TypeScript
+│   ├── main.ts                        # Main process entry (Server/Client mode selector)
+│   └── services/                      # Watchdog, Win32 input injection, SSH PTY
+├── server/                            # Backend source code in TypeScript
+│   ├── controllers/                   # Room management, user auth, vault storage
+│   ├── db/                            # SQLite schema definitions & database DAO
+│   ├── middleware/                    # JWT authentication & audit interceptors
+│   └── sockets/                       # WebRTC signaling, chat, and SSH terminal sockets
+├── src/                               # React 18 frontend source code
+│   ├── components/                    # Dashboard, Lobby, Vault, Whiteboard, Feeds
+│   ├── context/                       # Socket & Authentication state management
+│   └── main.tsx                       # React application mountpoint
+├── INSTALL_AND_RUN.bat                # 1-Click setup and launcher for Windows
+├── RUN_SERVER.bat                     # 1-Click launcher for Server Edition
+├── RUN_CLIENT.bat                     # 1-Click launcher for Client Edition
+├── package.json                       # Project metadata & dependencies
+├── tsconfig.electron.json             # TypeScript configuration for Electron
+├── vite.config.ts                     # Vite bundler configuration
+└── README.md                          # Official project documentation
 ```
 
 ---
 
-## 🤖 Tích hợp Trí tuệ nhân tạo (Local AI Copilot)
+## 🤖 Local AI Copilot Integration
 
-Ứng dụng hỗ trợ kết nối trực tiếp với **[Ollama](https://ollama.com/)** chạy trên máy chủ nội bộ (`http://127.0.0.1:11434`):
-* **Tự động tóm tắt kế hoạch:** Bấm nút *AI Summary* tại bất kỳ bài đăng phòng ban nào để rút gọn nội dung thành 3 gạch đầu dòng then chốt.
-* **AI SSH Copilot:** Trong cửa sổ terminal SSH, gõ `#ai <yêu cầu>` (ví dụ: `#ai kiểm tra cổng mạng đang mở`) để AI tự sinh cú pháp lệnh PowerShell chính xác.
-* **AI Security Guard:** Tự động quét `audit_logs` để đánh dấu các phiên đăng nhập lạ hoặc các nỗ lực vượt tường lửa.
+Secure Remote Workspace integrates out-of-the-box with **[Ollama](https://ollama.com/)** running locally (`http://127.0.0.1:11434`):
+* **Meeting & Plan Summarization:** Click the *AI Summary* action on any departmental post to extract key action items into concise bullet points.
+* **AI SSH Copilot:** Inside the web terminal, type `#ai <prompt>` (e.g., `#ai check listening network ports`) to synthesize validated PowerShell or Bash syntax.
+* **AI Security Watchdog:** Continuously analyzes `audit_logs` to flag anomalous authentication attempts or unauthorized traversal vectors.
 
 ---
 
-## 💖 Đóng góp & Star History
+## 💖 Contributing & Star History
 
-Dự án được xây dựng với mục tiêu mang lại giải pháp làm việc từ xa an toàn, hiện đại và hoàn toàn miễn phí cho cộng đồng!
+This project is built to deliver a secure, robust, and completely free remote management solution for teams worldwide!
 
 <div align="center">
 
@@ -265,9 +266,9 @@ Dự án được xây dựng với mục tiêu mang lại giải pháp làm vi�
 
 <br/>
 
-### 🌸 Cảm ơn bạn đã quan tâm đến Secure Remote Workspace! 🌸
+### 🌸 Thank you for supporting Secure Remote Workspace! 🌸
 
-**Đừng quên bấm ⭐ Star ở đầu trang để theo dõi các cập nhật mới nhất nhé!**
+**Don't forget to star ⭐ the repository to keep up with the latest updates!**
 
 `🛡️` · `Designed & Maintained with Zero-Trust Security Core` · `✨`
 

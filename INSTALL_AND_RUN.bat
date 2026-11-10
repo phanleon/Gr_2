@@ -11,27 +11,27 @@ echo.
 
 where node >nul 2>nul
 if errorlevel 1 (
-  echo [LOI] Khong tim thay Node.js tren may tinh!
-  echo Vui long cai dat Node.js LTS tu: https://nodejs.org/
-  echo Sau khi cai dat xong, hay chay lai file nay.
+  echo [ERROR] Node.js runtime was not found on your system!
+  echo Please install Node.js LTS from: https://nodejs.org/
+  echo After completing the installation, please run this script again.
   echo.
   pause
   exit /b 1
 )
 
 if not exist "node_modules" (
-  echo [1/2] Dang cai dat cac thu vien du an...
-  echo Qua trinh co the mat vai phut tuy toc do mang...
+  echo [1/2] Installing required project dependencies...
+  echo This process may take a few minutes depending on your network connection...
   echo.
   call npm install
   if errorlevel 1 (
     echo.
-    echo [LOI] npm install that bai! Vui long kiem tra mang.
+    echo [ERROR] npm install failed! Please check your network connection and retry.
     pause
     exit /b 1
   )
 )
 
-echo [2/2] Dang khoi dong Secure Remote Workspace...
+echo [2/2] Launching Secure Remote Workspace Server Edition...
 echo.
 call npm run electron:server
