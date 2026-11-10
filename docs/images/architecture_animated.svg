@@ -1,0 +1,380 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="100%" height="100%" style="background:#0b0f19; font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; border-radius:14px; box-shadow:0 8px 32px rgba(0,0,0,0.45);">
+  <defs>
+    <!-- Background Grid Pattern -->
+    <pattern id="cyber-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+    </pattern>
+
+    <!-- Glow Filters -->
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="header-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0984E3"/>
+      <stop offset="50%" stop-color="#6C5CE7"/>
+      <stop offset="100%" stop-color="#00CEC9"/>
+    </linearGradient>
+
+    <linearGradient id="client-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111c24"/>
+      <stop offset="100%" stop-color="#0d151c"/>
+    </linearGradient>
+
+    <linearGradient id="tunnel-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#241d11"/>
+      <stop offset="100%" stop-color="#18130a"/>
+    </linearGradient>
+
+    <linearGradient id="server-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#151a2e"/>
+      <stop offset="100%" stop-color="#0d1121"/>
+    </linearGradient>
+
+    <!-- Marker Arrowheads -->
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#00CEC9"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10B981"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#F59E0B"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#EF4444"/>
+    </marker>
+    <marker id="arrow-magenta" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#EC4899"/>
+    </marker>
+  </defs>
+
+  <style>
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+    @keyframes alert-flash {
+      0% { stroke: #EF4444; stroke-width: 2.5; filter: drop-shadow(0 0 8px #EF4444); }
+      50% { stroke: #FF7675; stroke-width: 1.5; filter: none; }
+      100% { stroke: #EF4444; stroke-width: 2.5; filter: drop-shadow(0 0 8px #EF4444); }
+    }
+    @keyframes flow-dash {
+      from { stroke-dashoffset: 40; }
+      to { stroke-dashoffset: 0; }
+    }
+    .tunnel-pipe {
+      stroke-dasharray: 6, 6;
+      animation: flow-dash 1.2s linear infinite;
+    }
+    .alert-box {
+      animation: alert-flash 1.2s infinite ease-in-out;
+    }
+    .node-title { font-weight: 600; font-size: 13px; fill: #ffffff; }
+    .node-sub { font-size: 11px; fill: #94a3b8; }
+    .zone-title { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+  </style>
+
+  <!-- Base Grid Fill -->
+  <rect width="1000" height="620" fill="url(#cyber-grid)" rx="14"/>
+
+  <!-- ================= TOP TITLE BAR ================= -->
+  <rect x="0" y="0" width="1000" height="48" fill="#070a12" rx="14"/>
+  <rect x="0" y="46" width="1000" height="2" fill="url(#header-grad)"/>
+  <circle cx="28" cy="24" r="5" fill="#EF4444"/>
+  <circle cx="44" cy="24" r="5" fill="#F59E0B"/>
+  <circle cx="60" cy="24" r="5" fill="#10B981"/>
+  <text x="500" y="29" text-anchor="middle" font-size="14" font-weight="700" fill="#E2E8F0" letter-spacing="1">
+    ⚡ SECURE REMOTE WORKSPACE — ZERO-TRUST OPERATIONAL ARCHITECTURE
+  </text>
+  <text x="965" y="28" text-anchor="end" font-size="11" font-weight="600" fill="#00CEC9">● LIVE DATA FLOW</text>
+
+  <!-- ================= 1. CLIENT WORKSTATION ZONE ================= -->
+  <g transform="translate(35, 68)">
+    <rect width="250" height="525" rx="12" fill="url(#client-bg)" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.4" filter="url(#card-shadow)"/>
+    <rect x="1" y="1" width="248" height="34" rx="11" fill="rgba(16, 185, 129, 0.1)"/>
+    <text x="20" y="23" class="zone-title" fill="#10B981">🏢 EMPLOYEE WORKSTATION</text>
+    <text x="20" y="44" font-size="10" fill="#6EE7B7">Client Edition (Protected Endpoint)</text>
+
+    <!-- Node: Client Workspace App -->
+    <g id="node-client" transform="translate(18, 58)">
+      <rect width="214" height="68" rx="8" fill="#16232b" stroke="#10B981" stroke-width="1.5"/>
+      <circle cx="25" cy="34" r="14" fill="rgba(16, 185, 129, 0.2)"/>
+      <text x="25" y="39" text-anchor="middle" font-size="14">💻</text>
+      <text x="48" y="30" class="node-title">Client_Workspace.exe</text>
+      <text x="48" y="48" class="node-sub">Electron Workstation Runtime</text>
+    </g>
+
+    <!-- Node: Screen Capturer & Streamer -->
+    <g id="node-screencap" transform="translate(18, 205)">
+      <rect width="214" height="68" rx="8" fill="#16232b" stroke="#00CEC9" stroke-width="1.2"/>
+      <circle cx="25" cy="34" r="14" fill="rgba(0, 206, 201, 0.2)"/>
+      <text x="25" y="39" text-anchor="middle" font-size="14">📹</text>
+      <text x="48" y="30" class="node-title">Desktop Capturer</text>
+      <text x="48" y="48" class="node-sub">Low-Latency WebRTC Stream</text>
+    </g>
+
+    <!-- Node: Local PTY Bridge -->
+    <g id="node-pty" transform="translate(18, 355)">
+      <rect width="214" height="68" rx="8" fill="#16232b" stroke="#A7F3D0" stroke-width="1.2"/>
+      <circle cx="25" cy="34" r="14" fill="rgba(167, 243, 208, 0.2)"/>
+      <text x="25" y="39" text-anchor="middle" font-size="14">⚡</text>
+      <text x="48" y="30" class="node-title">Local PTY Shell Bridge</text>
+      <text x="48" y="48" class="node-sub">Isolated Node-PTY Socket</text>
+    </g>
+
+    <!-- Panic Switch Notice -->
+    <g transform="translate(18, 465)">
+      <rect width="214" height="38" rx="6" fill="#1e1b2e" stroke="#EC4899" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="107" y="23" text-anchor="middle" font-size="11" font-weight="600" fill="#F472B6">🚨 EMERGENCY KILL-SWITCH: [ F12 ]</text>
+    </g>
+  </g>
+
+  <!-- ================= 2. CLOUD DISCOVERY & TUNNEL ZONE ================= -->
+  <g transform="translate(325, 68)">
+    <rect width="320" height="205" rx="12" fill="url(#tunnel-bg)" stroke="#F59E0B" stroke-width="1.5" stroke-opacity="0.4" filter="url(#card-shadow)"/>
+    <rect x="1" y="1" width="318" height="34" rx="11" fill="rgba(245, 158, 11, 0.1)"/>
+    <text x="20" y="23" class="zone-title" fill="#F59E0B">☁️ DYNAMIC TUNNEL &amp; DISCOVERY</text>
+    <text x="20" y="44" font-size="10" fill="#FCD34D">Zero Router Configuration ($0 Cloud Cost)</text>
+
+    <!-- Node: Cloudflare Quick Tunnel -->
+    <g id="node-cftunnel" transform="translate(20, 56)">
+      <rect width="280" height="58" rx="8" fill="#2d2214" stroke="#F59E0B" stroke-width="1.3"/>
+      <circle cx="26" cy="29" r="14" fill="rgba(245, 158, 11, 0.2)"/>
+      <text x="26" y="34" text-anchor="middle" font-size="14">🌐</text>
+      <text x="50" y="26" class="node-title">Cloudflare Outbound Tunnel</text>
+      <text x="50" y="44" class="node-sub">Encrypted Reverse SSL / WSS Gateway</text>
+    </g>
+
+    <!-- Node: GitHub Gist Registry -->
+    <g id="node-gist" transform="translate(20, 128)">
+      <rect width="280" height="58" rx="8" fill="#2d2214" stroke="#FBBF24" stroke-width="1.3"/>
+      <circle cx="26" cy="29" r="14" fill="rgba(251, 191, 36, 0.2)"/>
+      <text x="26" y="34" text-anchor="middle" font-size="14">📡</text>
+      <text x="50" y="26" class="node-title">GitHub Gist Discovery Registry</text>
+      <text x="50" y="44" class="node-sub">Dynamic Endpoint Auto-Sync (5s Watchdog)</text>
+    </g>
+  </g>
+
+  <!-- ================= 3. MANAGEMENT SERVER ZONE ================= -->
+  <g transform="translate(685, 68)">
+    <rect width="280" height="525" rx="12" fill="url(#server-bg)" stroke="#3B82F6" stroke-width="1.5" stroke-opacity="0.4" filter="url(#card-shadow)"/>
+    <rect x="1" y="1" width="278" height="34" rx="11" fill="rgba(59, 130, 246, 0.1)"/>
+    <text x="20" y="23" class="zone-title" fill="#60A5FA">🛡️ MANAGEMENT SERVER</text>
+    <text x="20" y="44" font-size="10" fill="#93C5FD">Server Edition (Central Control Core)</text>
+
+    <!-- Node: Server Admin App -->
+    <g id="node-server" transform="translate(18, 58)">
+      <rect width="244" height="65" rx="8" fill="#17223b" stroke="#3B82F6" stroke-width="1.5"/>
+      <circle cx="26" cy="32" r="14" fill="rgba(59, 130, 246, 0.2)"/>
+      <text x="26" y="37" text-anchor="middle" font-size="14">🖥️</text>
+      <text x="50" y="27" class="node-title">Server_Admin.exe</text>
+      <text x="50" y="45" class="node-sub">Central Hub &amp; Win32 Injector</text>
+    </g>
+
+    <!-- Node: RBAC & Dual-Lock -->
+    <g id="node-rbac" transform="translate(18, 140)">
+      <rect width="244" height="55" rx="8" fill="#17223b" stroke="#60A5FA" stroke-width="1.2"/>
+      <circle cx="26" cy="27" r="13" fill="rgba(96, 165, 250, 0.2)"/>
+      <text x="26" y="32" text-anchor="middle" font-size="13">🔑</text>
+      <text x="50" y="24" class="node-title">3-Tier RBAC &amp; Dual-Lock</text>
+      <text x="50" y="40" class="node-sub">Room Auth &amp; Owner Approvals</text>
+    </g>
+
+    <!-- Node: Dangerous Command Firewall -->
+    <g id="node-firewall" transform="translate(18, 215)">
+      <rect class="alert-box" width="244" height="72" rx="8" fill="#2d151c"/>
+      <circle cx="26" cy="36" r="14" fill="rgba(239, 68, 68, 0.25)"/>
+      <text x="26" y="41" text-anchor="middle" font-size="14">🛑</text>
+      <text x="50" y="28" class="node-title" fill="#F87171">Dangerous Cmd Firewall</text>
+      <text x="50" y="45" font-size="10.5" fill="#FCA5A5">Blocks 'rm -rf', 'format', 'del /s'</text>
+      <text x="50" y="59" font-size="9.5" font-weight="700" fill="#EF4444">⚡ INSTANT DISPATCH ALERT</text>
+    </g>
+
+    <!-- Node: SQLite WAL DB -->
+    <g id="node-db" transform="translate(18, 308)">
+      <rect width="244" height="58" rx="8" fill="#17223b" stroke="#818CF8" stroke-width="1.2"/>
+      <circle cx="26" cy="29" r="13" fill="rgba(129, 140, 248, 0.2)"/>
+      <text x="26" y="34" text-anchor="middle" font-size="13">💾</text>
+      <text x="50" y="25" class="node-title">SQLite WAL Database</text>
+      <text x="50" y="42" class="node-sub">Complete Keystroke &amp; Audit Trail</text>
+    </g>
+
+    <!-- Node: Ollama AI Guard -->
+    <g id="node-ai" transform="translate(18, 386)">
+      <rect width="244" height="60" rx="8" fill="#17223b" stroke="#C084FC" stroke-width="1.2"/>
+      <circle cx="26" cy="30" r="13" fill="rgba(192, 132, 252, 0.2)"/>
+      <text x="26" y="35" text-anchor="middle" font-size="13">🤖</text>
+      <text x="50" y="26" class="node-title">Local AI Ollama Guard</text>
+      <text x="50" y="43" class="node-sub">Log Anomaly &amp; SSH Copilot (#ai)</text>
+    </g>
+
+    <g transform="translate(18, 465)">
+      <rect width="244" height="38" rx="6" fill="#132338" stroke="#38BDF8" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="122" y="23" text-anchor="middle" font-size="11" font-weight="600" fill="#38BDF8">🔒 END-TO-END TLS / AES-GCM</text>
+    </g>
+  </g>
+
+  <!-- ================= ANIMATED FLOW CONNECTION PATHS ================= -->
+
+  <!-- PATH 1: Discovery Sync (Server -> Cloudflare -> Gist -> Client) -->
+  <path id="path-sync-1" d="M 703 155 L 625 155" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+  <path id="path-sync-2" d="M 485 182 L 485 196" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+  <path id="path-sync-3" d="M 345 225 C 310 225, 300 160, 267 160" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5" opacity="0.75"/>
+
+  <!-- PATH 2: Main Encrypted Tunnel Connection (Bidirectional WSS / WebRTC) -->
+  <path id="path-main-tunnel" d="M 267 140 C 420 140, 560 140, 703 140" fill="none" stroke="#00CEC9" stroke-width="3" stroke-linecap="round" opacity="0.85" filter="url(#glow-cyan)"/>
+
+  <!-- PATH 3: Screen Stream Video Track (Client Screen -> Server Admin) -->
+  <path id="path-screen-stream" d="M 267 305 C 460 305, 540 170, 703 170" fill="none" stroke="#10B981" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.8" filter="url(#glow-green)"/>
+
+  <!-- PATH 4: Win32 Mouse & Keyboard Injection (Server -> Client) -->
+  <path id="path-win32-inject" d="M 703 185 C 550 210, 430 310, 267 310" fill="none" stroke="#EC4899" stroke-width="2" stroke-dasharray="4,4" opacity="0.75"/>
+
+  <!-- PATH 5: Shell Commands to Firewall (PTY -> CmdFirewall) -->
+  <path id="path-shell-cmd" d="M 267 455 C 460 455, 540 320, 703 320" fill="none" stroke="#A78BFA" stroke-width="2.5" stroke-dasharray="5,5" opacity="0.8"/>
+
+  <!-- PATH 6: Safe Shell Commands to SQLite DB -->
+  <path id="path-safe-cmd" d="M 825 355 L 825 376" fill="none" stroke="#10B981" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+
+  <!-- PATH 7: Dangerous Command Intercept Alert (CmdFirewall -> Server Admin) -->
+  <path id="path-alarm-alert" d="M 703 300 C 660 300, 660 175, 703 175" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="4,4" opacity="0.9" filter="url(#glow-red)"/>
+
+  <!-- PATH 8: DB to AI Anomaly Inspection -->
+  <path id="path-ai-scan" d="M 825 434 L 825 454" fill="none" stroke="#C084FC" stroke-width="2" stroke-dasharray="3,3" opacity="0.8"/>
+
+  <!-- ================= ANIMATED MOVING DATA PACKETS ================= -->
+
+  <!-- Packet 1: Discovery Gist Sync Packet (Amber) -->
+  <circle r="5" fill="#F59E0B" filter="url(#glow-amber)">
+    <animateMotion dur="2.4s" repeatCount="indefinite" path="M 703 155 L 625 155" />
+  </circle>
+  <circle r="5" fill="#FBBF24" filter="url(#glow-amber)">
+    <animateMotion dur="2.2s" begin="0.8s" repeatCount="indefinite" path="M 345 225 C 310 225, 300 160, 267 160" />
+  </circle>
+
+  <!-- Packet 2: Bi-directional Zero-Trust Encrypted Packets (Cyan) -->
+  <circle r="6" fill="#00CEC9" filter="url(#glow-cyan)">
+    <animateMotion dur="2.8s" repeatCount="indefinite" path="M 267 140 C 420 140, 560 140, 703 140" />
+  </circle>
+  <circle r="4.5" fill="#E0F2FE" filter="url(#glow-cyan)">
+    <animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite" path="M 703 140 C 560 140, 420 140, 267 140" />
+  </circle>
+
+  <!-- Packet 3: Real-Time Screen Stream Video Frames (Emerald Green) -->
+  <circle r="5" fill="#10B981" filter="url(#glow-green)">
+    <animateMotion dur="2.0s" repeatCount="indefinite" path="M 267 305 C 460 305, 540 170, 703 170" />
+  </circle>
+  <circle r="4" fill="#34D399" filter="url(#glow-green)">
+    <animateMotion dur="2.0s" begin="0.7s" repeatCount="indefinite" path="M 267 305 C 460 305, 540 170, 703 170" />
+  </circle>
+  <circle r="4" fill="#6EE7B7" filter="url(#glow-green)">
+    <animateMotion dur="2.0s" begin="1.4s" repeatCount="indefinite" path="M 267 305 C 460 305, 540 170, 703 170" />
+  </circle>
+
+  <!-- Packet 4: Win32 Remote Control Event Injection (Magenta) -->
+  <circle r="5" fill="#EC4899" filter="url(#glow-red)">
+    <animateMotion dur="1.8s" repeatCount="indefinite" path="M 703 185 C 550 210, 430 310, 267 310" />
+  </circle>
+
+  <!-- Packet 5: PTY Shell Stream to Command Firewall (Violet) -->
+  <circle r="5" fill="#A78BFA">
+    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 267 455 C 460 455, 540 320, 703 320" />
+  </circle>
+
+  <!-- Packet 6: Verified Safe Commands going to SQLite DB (Green) -->
+  <circle r="4" fill="#10B981" filter="url(#glow-green)">
+    <animateMotion dur="1.2s" repeatCount="indefinite" path="M 825 355 L 825 376" />
+  </circle>
+
+  <!-- Packet 7: Dangerous Command BLOCKED & Intercept Red Alert (Red) -->
+  <circle r="5.5" fill="#EF4444" filter="url(#glow-red)">
+    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 703 300 C 660 300, 660 175, 703 175" />
+  </circle>
+
+  <!-- ================= INFORMATIVE CALLOUT BADGES ================= -->
+  <!-- Badge: Encrypted WSS Tunnel -->
+  <g transform="translate(415, 115)">
+    <rect width="180" height="24" rx="12" fill="#0c2329" stroke="#00CEC9" stroke-width="1.2"/>
+    <text x="90" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#00CEC9">🔒 ENCRYPTED WSS TUNNEL</text>
+  </g>
+
+  <!-- Badge: Video Stream -->
+  <g transform="translate(425, 235)">
+    <rect width="160" height="22" rx="11" fill="#0b241c" stroke="#10B981" stroke-width="1.2"/>
+    <text x="80" y="15" text-anchor="middle" font-size="9.5" font-weight="700" fill="#10B981">📹 WebRTC Video Track</text>
+  </g>
+
+  <!-- Badge: Win32 Remote Control -->
+  <g transform="translate(390, 310)">
+    <rect width="190" height="22" rx="11" fill="#2b1424" stroke="#EC4899" stroke-width="1.2"/>
+    <text x="95" y="15" text-anchor="middle" font-size="9.5" font-weight="700" fill="#F472B6">🖱️ Win32 FFI Input (koffi)</text>
+  </g>
+
+  <!-- Badge: Shell Command Firewall Audit -->
+  <g transform="translate(410, 420)">
+    <rect width="185" height="22" rx="11" fill="#231733" stroke="#A78BFA" stroke-width="1.2"/>
+    <text x="92" y="15" text-anchor="middle" font-size="9.5" font-weight="700" fill="#C4B5FD">⚡ Shell Execution Pipe</text>
+  </g>
+
+  <!-- Badge: Critical Command Blocked Alert -->
+  <g transform="translate(560, 275)">
+    <rect class="alert-box" width="130" height="24" rx="6" fill="#3b1119"/>
+    <text x="65" y="16" text-anchor="middle" font-size="9.5" font-weight="800" fill="#EF4444">🚨 BLOCKED &amp; ALERT</text>
+  </g>
+
+  <!-- ================= BOTTOM LEGEND ================= -->
+  <g transform="translate(180, 580)">
+    <circle cx="20" cy="15" r="4" fill="#00CEC9"/>
+    <text x="30" y="19" font-size="11" fill="#94A3B8">WSS Tunnel</text>
+
+    <circle cx="140" cy="15" r="4" fill="#10B981"/>
+    <text x="150" y="19" font-size="11" fill="#94A3B8">Screen Stream</text>
+
+    <circle cx="270" cy="15" r="4" fill="#EC4899"/>
+    <text x="280" y="19" font-size="11" fill="#94A3B8">Win32 Injection</text>
+
+    <circle cx="410" cy="15" r="4" fill="#A78BFA"/>
+    <text x="420" y="19" font-size="11" fill="#94A3B8">Shell Audit</text>
+
+    <circle cx="530" cy="15" r="4" fill="#EF4444"/>
+    <text x="540" y="19" font-size="11" fill="#94A3B8">Firewall Intercept</text>
+
+    <circle cx="670" cy="15" r="4" fill="#F59E0B"/>
+    <text x="680" y="19" font-size="11" fill="#94A3B8">Endpoint Sync</text>
+  </g>
+</svg>

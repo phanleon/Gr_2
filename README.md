@@ -98,6 +98,27 @@ Watch the visual demonstration explaining **How Cross-Network Internet & LAN Rou
 
 ## 🔄 Security Architecture
 
+The operational data flow across the Zero-Trust system is visualized dynamically below, illustrating live discovery polling, bidirectional encrypted tunnels, real-time WebRTC streaming, and active heuristic firewall interception:
+
+<div align="center">
+
+<img src="docs/images/architecture_animated.svg" alt="Animated Security Architecture Diagram" width="100%" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.35); max-width: 950px;" />
+
+</div>
+
+<br/>
+
+#### ⚡ Real-Time Operational Flows:
+* 🟡 **Dynamic Discovery Sync (Gold):** Automatic 5-second polling between `Server_Admin` and the Cloudflare Tunnel, synchronizing dynamic public endpoints through the GitHub Gist Registry.
+* 🔵 **Zero-Trust Encrypted Tunnel (Cyan):** High-speed bidirectional WebSocket & WebRTC communication bypassing corporate firewalls and carrier-grade NATs.
+* 🟢 **UltraViewer Desktop Stream (Emerald):** Continuous low-latency video frames captured directly from the desktop display pipeline and rendered on the admin dashboard.
+* 🟣 **Win32 Input Injection (Magenta):** Kernel-level mouse and keyboard event transmission via `koffi` (`user32.dll`) with the emergency **`[ F12 ]`** hardware kill-switch.
+* ⚡ **Shell Execution Pipe (Violet):** Isolated pseudo-terminal (PTY) shell commands transmitted directly into the inspection firewall.
+* 🚨 **Active Heuristic Intercept (Flashing Red):** Immediate detection and blocking of destructive commands (`del /s`, `rm -rf`, `format`) with real-time `CRITICAL` alert broadcasting.
+
+<details>
+<summary><b>📐 Click to expand static Mermaid architecture definition</b></summary>
+
 ```mermaid
 flowchart TD
     subgraph ClientZone ["🏢 Employee Workstation (Client Edition)"]
@@ -143,6 +164,8 @@ flowchart TD
     class ServerApp,AuthRBAC,AuditDB blue;
     class CmdFirewall,OllamaAI pink;
 ```
+
+</details>
 
 ---
 
