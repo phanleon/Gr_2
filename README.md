@@ -38,7 +38,6 @@
 - [🔐 Default Credentials](#-default-credentials)
 - [📂 Project Structure](#-project-structure)
 - [🤖 Local AI Copilot Integration](#-local-ai-copilot-integration)
-- [💖 Contributing & Star History](#-contributing--star-history)
 
 ---
 
@@ -254,24 +253,8 @@ Secure Remote Workspace integrates out-of-the-box with **[Ollama](https://ollama
 * **AI SSH Copilot:** Inside the web terminal, type `#ai <prompt>` (e.g., `#ai check listening network ports`) to synthesize validated PowerShell or Bash syntax.
 * **AI Security Watchdog:** Continuously analyzes `audit_logs` to flag anomalous authentication attempts or unauthorized traversal vectors.
 
----
-
-## 💖 Contributing & Star History
-
-This project is built to deliver a secure, robust, and completely free remote management solution for teams worldwide!
-
-<div align="center">
-
-[![Star History Chart](https://api.star-history.com/svg?repos=phanleon/Gr_2&type=Date)](https://star-history.com/#phanleon/Gr_2&Date)
-
 <br/>
 
-### 🌸 Thank you for supporting Secure Remote Workspace! 🌸
-
-**Don't forget to star ⭐ the repository to keep up with the latest updates!**
-
-`🛡️` · `Designed & Maintained with Zero-Trust Security Core` · `✨`
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00B894,30:00CEC9,60:6C5CE7,100:0984E3&height=140&section=footer&animation=fadeIn" width="100%" />
-
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00B894,30:00CEC9,60:6C5CE7,100:0984E3&height=120&section=footer&animation=fadeIn" width="100%" />
 </div>
