@@ -4,8 +4,8 @@ chcp 65001 >nul
 cd /d "%~dp0"
 
 echo ================================================================
-echo   Secure Remote Workspace & Zero-Trust SSH/Desktop System
-echo   Author: Phan Minh Nhut
+echo   Secure Remote Workspace ^& Zero-Trust SSH/Desktop System
+echo   Enterprise Edition - Open Source Solution
 echo ================================================================
 echo.
 

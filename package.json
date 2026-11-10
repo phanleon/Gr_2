@@ -2,7 +2,7 @@
   "name": "secure-remote-workspace",
   "version": "1.0.0",
   "description": "Zero-Trust Remote Workspace, Audited SSH & UltraViewer System",
-  "author": "Phan Minh Nhựt",
+  "author": "Zero-Trust Engineering Team",
   "homepage": "https://github.com/zero-trust/secure-remote-workspace",
   "main": "dist-electron/electron/main.js",
   "scripts": {

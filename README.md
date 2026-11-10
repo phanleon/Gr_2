@@ -12,7 +12,7 @@
 [![Release Version](https://img.shields.io/badge/Release-V1.0.0_Enterprise-00CEC9?style=for-the-badge&logo=electron)](https://github.com/phanleon/Gr_2)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11%20%7C%20Linux-0984E3?style=for-the-badge&logo=windows)](https://github.com/phanleon/Gr_2)
 [![Security Level](https://img.shields.io/badge/Security-Zero--Trust%20RBAC-D63031?style=for-the-badge&logo=shield)](https://github.com/phanleon/Gr_2)
-[![Author](https://img.shields.io/badge/Author-Phan%20Minh%20Nhựt-6C5CE7?style=for-the-badge&logo=github)](https://github.com/phanleon/Gr_2)
+[![License](https://img.shields.io/badge/License-MIT-6C5CE7?style=for-the-badge&logo=opensourceinitiative)](https://github.com/phanleon/Gr_2)
 
 <br/>
 
@@ -269,7 +269,7 @@ Dự án được xây dựng với mục tiêu mang lại giải pháp làm vi�
 
 **Đừng quên bấm ⭐ Star ở đầu trang để theo dõi các cập nhật mới nhất nhé!**
 
-`🛡️` · `Designed & Maintained by Phan Minh Nhựt` · `✨`
+`🛡️` · `Designed & Maintained with Zero-Trust Security Core` · `✨`
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00B894,30:00CEC9,60:6C5CE7,100:0984E3&height=140&section=footer&animation=fadeIn" width="100%" />
 
